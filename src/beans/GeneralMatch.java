@@ -1,6 +1,10 @@
 package beans;
 
-public class GeneralMatch {
+public class GeneralMatch extends Bean{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String date;// 比赛日期
 	private String homeTeam;// 主场球队

@@ -1,32 +1,35 @@
 package beans;
 
-public class GameTeam {
+public class GameTeam extends Bean {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String date;// 比赛日期
 	private String teamName;// 球队名称
 	// 球队普通比赛数据
-	private int isHome;// 是否主场
-	private int[] quarterPoint;// 每节比赛得分（包括季后赛）
+	private double[] quarterPoint;// 每节比赛得分（包括季后赛）
+	//
 	private double minute;// 比赛总时间
-	private int totHit;// 总命中
-	private int totShot;// 总出手
+	private double totHit;// 总命中
+	private double totShot;// 总出手
 	private double shot;// 命中率
-	private int threeHit;// 三分命中数
-	private int threeShot;// 三分出手数
+	private double threeHit;// 三分命中数
+	private double threeShot;// 三分出手数
 	private double three;// 三分命中率
-	private int freeHit;// 罚球命中数
-	private int freeShot;// 罚球出手数
+	private double freeHit;// 罚球命中数
+	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private int offRebound;// 进攻篮板
-	private int defRebound;// 防守篮板
-	private int totRebound;// 总篮板
-	private int assist;// 助攻
-	private int steal;// 抢断
-	private int block;// 盖帽
-	private int fault;// 失误
-	private int foul;// 犯规
-	private int point;// 得分
-	private int plus;// 贡献值
+	private double offRebound;// 进攻篮板
+	private double defRebound;// 防守篮板
+	private double totRebound;// 总篮板
+	private double assist;// 助攻
+	private double steal;// 抢断
+	private double block;// 盖帽
+	private double fault;// 失误
+	private double foul;// 犯规
+	private double point;// 得分
 
 	// 球队高级比赛信息
 	private double realShot;// 真实命中率
@@ -60,12 +63,12 @@ public class GameTeam {
 		this.teamName = teamName;
 	}
 
-	public int getIsHome() {
-		return isHome;
+	public double[] getQuarterPoint() {
+		return quarterPoint;
 	}
 
-	public void setIsHome(int isHome) {
-		this.isHome = isHome;
+	public void setQuarterPoint(double[] quarterPoint) {
+		this.quarterPoint = quarterPoint;
 	}
 
 	public double getMinute() {
@@ -76,19 +79,19 @@ public class GameTeam {
 		this.minute = minute;
 	}
 
-	public int getTotHit() {
+	public double getTotHit() {
 		return totHit;
 	}
 
-	public void setTotHit(int totHit) {
+	public void setTotHit(double totHit) {
 		this.totHit = totHit;
 	}
 
-	public int getTotShot() {
+	public double getTotShot() {
 		return totShot;
 	}
 
-	public void setTotShot(int totShot) {
+	public void setTotShot(double totShot) {
 		this.totShot = totShot;
 	}
 
@@ -100,19 +103,19 @@ public class GameTeam {
 		this.shot = shot;
 	}
 
-	public int getThreeHit() {
+	public double getThreeHit() {
 		return threeHit;
 	}
 
-	public void setThreeHit(int threeHit) {
+	public void setThreeHit(double threeHit) {
 		this.threeHit = threeHit;
 	}
 
-	public int getThreeShot() {
+	public double getThreeShot() {
 		return threeShot;
 	}
 
-	public void setThreeShot(int threeShot) {
+	public void setThreeShot(double threeShot) {
 		this.threeShot = threeShot;
 	}
 
@@ -124,19 +127,19 @@ public class GameTeam {
 		this.three = three;
 	}
 
-	public int getFreeHit() {
+	public double getFreeHit() {
 		return freeHit;
 	}
 
-	public void setFreeHit(int freeHit) {
+	public void setFreeHit(double freeHit) {
 		this.freeHit = freeHit;
 	}
 
-	public int getFreeShot() {
+	public double getFreeShot() {
 		return freeShot;
 	}
 
-	public void setFreeShot(int freeShot) {
+	public void setFreeShot(double freeShot) {
 		this.freeShot = freeShot;
 	}
 
@@ -148,84 +151,76 @@ public class GameTeam {
 		this.free = free;
 	}
 
-	public int getOffRebound() {
+	public double getOffRebound() {
 		return offRebound;
 	}
 
-	public void setOffRebound(int offRebound) {
+	public void setOffRebound(double offRebound) {
 		this.offRebound = offRebound;
 	}
 
-	public int getDefRebound() {
+	public double getDefRebound() {
 		return defRebound;
 	}
 
-	public void setDefRebound(int defRebound) {
+	public void setDefRebound(double defRebound) {
 		this.defRebound = defRebound;
 	}
 
-	public int getTotRebound() {
+	public double getTotRebound() {
 		return totRebound;
 	}
 
-	public void setTotRebound(int totRebound) {
+	public void setTotRebound(double totRebound) {
 		this.totRebound = totRebound;
 	}
 
-	public int getAssist() {
+	public double getAssist() {
 		return assist;
 	}
 
-	public void setAssist(int assist) {
+	public void setAssist(double assist) {
 		this.assist = assist;
 	}
 
-	public int getSteal() {
+	public double getSteal() {
 		return steal;
 	}
 
-	public void setSteal(int steal) {
+	public void setSteal(double steal) {
 		this.steal = steal;
 	}
 
-	public int getBlock() {
+	public double getBlock() {
 		return block;
 	}
 
-	public void setBlock(int block) {
+	public void setBlock(double block) {
 		this.block = block;
 	}
 
-	public int getFault() {
+	public double getFault() {
 		return fault;
 	}
 
-	public void setFault(int fault) {
+	public void setFault(double fault) {
 		this.fault = fault;
 	}
 
-	public int getFoul() {
+	public double getFoul() {
 		return foul;
 	}
 
-	public void setFoul(int foul) {
+	public void setFoul(double foul) {
 		this.foul = foul;
 	}
 
-	public int getPoint() {
+	public double getPoint() {
 		return point;
 	}
 
-	public void setPoint(int point) {
+	public void setPoint(double point) {
 		this.point = point;
-	}
-
-	public int getPlus() {
-		return plus;
-	}
-
-	public void setPlus(int plus) {
-		this.plus = plus;
 	}
 
 	public double getRealShot() {
@@ -338,13 +333,5 @@ public class GameTeam {
 
 	public void setDefEFF(double defEFF) {
 		this.defEFF = defEFF;
-	}
-
-	public int[] getQuarterPoint() {
-		return quarterPoint;
-	}
-
-	public void setQuarterPoint(int[] quarterPoint) {
-		this.quarterPoint = quarterPoint;
 	}
 }

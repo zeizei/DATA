@@ -1,37 +1,41 @@
 package beans;
 
-public class SeasonPlayer {
+public class SeasonPlayer extends Bean{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String name;// 姓名
 	private String season;// 赛季
 	private String teamName;// 球队名称
 	// 求普通赛季数据
-	private int age;// 年龄
+	private double age;// 年龄
 	private String position;// 位置
-	private int numOfGame;// 参赛场数
-	private int numOfStart;// 首发次数
+	private double numOfGame;// 参赛场数
+	private double numOfStart;// 首发次数
 	private double minute;// 上场时间
-	private int totalHit;// 总命中数
-	private int totalShot;// 总出手数
+	private double totalHit;// 总命中数
+	private double totalShot;// 总出手数
 	private double shot;// 总命中率
-	private int threeHit;// 三分命中数
-	private int threeShot;// 三分出手数
+	private double threeHit;// 三分命中数
+	private double threeShot;// 三分出手数
 	private double three;// 三分命中率
-	private int twoShot;// 两分出手数
-	private int twoHit;// 两分命中数
+	private double twoShot;// 两分出手数
+	private double twoHit;// 两分命中数
 	private double two;// 两分命中率
-	private int freeHit;// 罚球命中数
-	private int freeShot;// 罚球出手数
+	private double freeHit;// 罚球命中数
+	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private int dfdRebound;// 后场篮板
-	private int ofdRebound;// 前场篮板
-	private int totRebound;// 总篮板
-	private int assist;// 助攻数
-	private int steal;// 抢断数
-	private int block;// 盖帽数
-	private int fault;// 失误
-	private int foul;// 犯规
-	private int point;// 得分
+	private double dfdRebound;// 后场篮板
+	private double ofdRebound;// 前场篮板
+	private double totRebound;// 总篮板
+	private double assist;// 助攻数
+	private double steal;// 抢断数
+	private double block;// 盖帽数
+	private double fault;// 失误
+	private double foul;// 犯规
+	private double point;// 得分
 	// 球员高级赛季数据
 	private double playerEFF;// 球员效率值
 	private double realShot;// 真实命中率
@@ -78,11 +82,11 @@ public class SeasonPlayer {
 		this.teamName = teamName;
 	}
 
-	public int getAge() {
+	public double getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(double age) {
 		this.age = age;
 	}
 
@@ -94,19 +98,19 @@ public class SeasonPlayer {
 		this.position = position;
 	}
 
-	public int getNumOfGame() {
+	public double getNumOfGame() {
 		return numOfGame;
 	}
 
-	public void setNumOfGame(int numOfGame) {
+	public void setNumOfGame(double numOfGame) {
 		this.numOfGame = numOfGame;
 	}
 
-	public int getNumOfStart() {
+	public double getNumOfStart() {
 		return numOfStart;
 	}
 
-	public void setNumOfStart(int numOfStart) {
+	public void setNumOfStart(double numOfStart) {
 		this.numOfStart = numOfStart;
 	}
 
@@ -118,19 +122,19 @@ public class SeasonPlayer {
 		this.minute = minute;
 	}
 
-	public int getTotalHit() {
+	public double getTotalHit() {
 		return totalHit;
 	}
 
-	public void setTotalHit(int totalHit) {
+	public void setTotalHit(double totalHit) {
 		this.totalHit = totalHit;
 	}
 
-	public int getTotalShot() {
+	public double getTotalShot() {
 		return totalShot;
 	}
 
-	public void setTotalShot(int totalShot) {
+	public void setTotalShot(double totalShot) {
 		this.totalShot = totalShot;
 	}
 
@@ -142,19 +146,19 @@ public class SeasonPlayer {
 		this.shot = shot;
 	}
 
-	public int getThreeHit() {
+	public double getThreeHit() {
 		return threeHit;
 	}
 
-	public void setThreeHit(int threeHit) {
+	public void setThreeHit(double threeHit) {
 		this.threeHit = threeHit;
 	}
 
-	public int getThreeShot() {
+	public double getThreeShot() {
 		return threeShot;
 	}
 
-	public void setThreeShot(int threeShot) {
+	public void setThreeShot(double threeShot) {
 		this.threeShot = threeShot;
 	}
 
@@ -166,19 +170,19 @@ public class SeasonPlayer {
 		this.three = three;
 	}
 
-	public int getTwoShot() {
+	public double getTwoShot() {
 		return twoShot;
 	}
 
-	public void setTwoShot(int twoShot) {
+	public void setTwoShot(double twoShot) {
 		this.twoShot = twoShot;
 	}
 
-	public int getTwoHit() {
+	public double getTwoHit() {
 		return twoHit;
 	}
 
-	public void setTwoHit(int twoHit) {
+	public void setTwoHit(double twoHit) {
 		this.twoHit = twoHit;
 	}
 
@@ -190,19 +194,19 @@ public class SeasonPlayer {
 		this.two = two;
 	}
 
-	public int getFreeHit() {
+	public double getFreeHit() {
 		return freeHit;
 	}
 
-	public void setFreeHit(int freeHit) {
+	public void setFreeHit(double freeHit) {
 		this.freeHit = freeHit;
 	}
 
-	public int getFreeShot() {
+	public double getFreeShot() {
 		return freeShot;
 	}
 
-	public void setFreeShot(int freeShot) {
+	public void setFreeShot(double freeShot) {
 		this.freeShot = freeShot;
 	}
 
@@ -214,75 +218,75 @@ public class SeasonPlayer {
 		this.free = free;
 	}
 
-	public int getDfdRebound() {
+	public double getDfdRebound() {
 		return dfdRebound;
 	}
 
-	public void setDfdRebound(int dfdRebound) {
+	public void setDfdRebound(double dfdRebound) {
 		this.dfdRebound = dfdRebound;
 	}
 
-	public int getOfdRebound() {
+	public double getOfdRebound() {
 		return ofdRebound;
 	}
 
-	public void setOfdRebound(int ofdRebound) {
+	public void setOfdRebound(double ofdRebound) {
 		this.ofdRebound = ofdRebound;
 	}
 
-	public int getTotRebound() {
+	public double getTotRebound() {
 		return totRebound;
 	}
 
-	public void setTotRebound(int totRebound) {
+	public void setTotRebound(double totRebound) {
 		this.totRebound = totRebound;
 	}
 
-	public int getAssist() {
+	public double getAssist() {
 		return assist;
 	}
 
-	public void setAssist(int assist) {
+	public void setAssist(double assist) {
 		this.assist = assist;
 	}
 
-	public int getSteal() {
+	public double getSteal() {
 		return steal;
 	}
 
-	public void setSteal(int steal) {
+	public void setSteal(double steal) {
 		this.steal = steal;
 	}
 
-	public int getBlock() {
+	public double getBlock() {
 		return block;
 	}
 
-	public void setBlock(int block) {
+	public void setBlock(double block) {
 		this.block = block;
 	}
 
-	public int getFault() {
+	public double getFault() {
 		return fault;
 	}
 
-	public void setFault(int fault) {
+	public void setFault(double fault) {
 		this.fault = fault;
 	}
 
-	public int getFoul() {
+	public double getFoul() {
 		return foul;
 	}
 
-	public void setFoul(int foul) {
+	public void setFoul(double foul) {
 		this.foul = foul;
 	}
 
-	public int getPoint() {
+	public double getPoint() {
 		return point;
 	}
 
-	public void setPoint(int point) {
+	public void setPoint(double point) {
 		this.point = point;
 	}
 
@@ -445,4 +449,5 @@ public class SeasonPlayer {
 	public void setReplaceValue(double replaceValue) {
 		this.replaceValue = replaceValue;
 	}
+
 }

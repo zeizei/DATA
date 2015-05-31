@@ -21,7 +21,10 @@ public class Driver {
 	}
 
 	public void testMatchHtml() {
-		MatchHtml match = new MatchHtml("http://www.basketball-reference.com/boxscores/201410280LAL.html");
+		MatchMapHtml schedule = new MatchMapHtml("http://www.basketball-reference.com/leagues/NBA_2015_games.html");
+		ArrayList<GeneralMatch> generalMatchList = schedule.getGeneralMatchList();
+		ArrayList<String> detailMatchUrlList = schedule.getDetailMatchUrlList();
+		MatchHtml match = new MatchHtml(detailMatchUrlList.get(0), generalMatchList.get(0));
 	}
 
 	public static void main(String[] args) {

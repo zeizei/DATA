@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -73,5 +76,67 @@ class HtmlReader {
 
 	protected String getHomeUrlString() {
 		return "http://www.basketball-reference.com";
+	}
+
+	protected double toDouble(String str) {
+		double result = 0;
+		if (str != null) {
+			try {
+				result = Double.parseDouble(str);
+			} catch (NumberFormatException e) {
+				result = 0;
+			}
+		}
+		return result;
+	}
+
+	protected int toInt(String str) {
+		int result = 0;
+		if (str != null) {
+			try {
+				result = Integer.parseInt(str);
+			} catch (NumberFormatException e) {
+				result = 0;
+			}
+		}
+		return result;
+	}
+
+	protected boolean AutoEncapsulate(Object object, String[] fields, Object[] contents) {
+		boolean isSucceed = true;
+		if (object != null && fields != null && contents != null && fields.length == contents.length) {
+			Class<?> c = object.getClass();
+			for (int i = 0; i < fields.length; i++) {
+				StringBuffer buffer = new StringBuffer();
+				try {
+					Field field = c.getDeclaredField(fields[i]);
+					Class<?> MethodType = field.getType();
+					buffer.append("set");
+					buffer.append(fields[i].substring(0, 1).toUpperCase());
+					buffer.append(fields[i].substring(1));
+					Method method = c.getDeclaredMethod(buffer.toString(), MethodType);
+					method.invoke(object, contents[i]);
+				} catch (NoSuchFieldException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				}
+			}
+		}
+		return isSucceed;
 	}
 }

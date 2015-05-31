@@ -1,6 +1,10 @@
 package beans;
 
-public class GeneralPlayer {
+public class GeneralPlayer extends Bean{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String playerName;
 	private String birthday;

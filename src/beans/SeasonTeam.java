@@ -1,59 +1,63 @@
 package beans;
 
-public class SeasonTeam {
+public class SeasonTeam extends Bean{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String teamName;
 	private String season;
 	// 球队普通赛季数据
-	private int numOfGame;// 比赛场数
+	private double numOfGame;// 比赛场数
+	private double numOfWin;// 赢场数
+	private double numOfLose;// 输场数
 	private double minute;// 总时间
 	//
-	private int totalHit;// 总命中数
-	private int totalShot;// 总出手数
+	private double totalHit;// 总命中数
+	private double totalShot;// 总出手数
 	private double shot;// 总命中率
-	private int threeHit;// 三分命中数
-	private int threeShot;// 三分出手数
+	private double threeHit;// 三分命中数
+	private double threeShot;// 三分出手数
 	private double three;// 三分命中率
-	private int twoShot;// 两分出手数
-	private int twoHit;// 两分命中数
+	private double twoShot;// 两分出手数
+	private double twoHit;// 两分命中数
 	private double two;// 两分命中率
-	private int freeHit;// 罚球命中数
-	private int freeShot;// 罚球出手数
+	private double freeHit;// 罚球命中数
+	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private int dfdRebound;// 后场篮板
-	private int ofdRebound;// 前场篮板
-	private int totRebound;// 总篮板
-	private int assist;// 助攻数
-	private int steal;// 抢断数
-	private int block;// 盖帽数
-	private int fault;// 失误
-	private int foul;// 犯规
-	private int point;// 得分
+	private double dfdRebound;// 后场篮板
+	private double ofdRebound;// 前场篮板
+	private double totRebound;// 总篮板
+	private double assist;// 助攻数
+	private double steal;// 抢断数
+	private double block;// 盖帽数
+	private double fault;// 失误
+	private double foul;// 犯规
+	private double point;// 得分
 	// 对手普通比赛数据
-	private int oppTotalHit;// 总命中数
-	private int oppTotalShot;// 总出手数
+	private double oppTotalHit;// 总命中数
+	private double oppTotalShot;// 总出手数
 	private double oppShot;// 总命中率
-	private int oppThreeHit;// 三分命中数
-	private int oppThreeShot;// 三分出手数
+	private double oppThreeHit;// 三分命中数
+	private double oppThreeShot;// 三分出手数
 	private double oppThree;// 三分命中率
-	private int oppTwoShot;// 两分出手数
-	private int oppTwoHit;// 两分命中数
+	private double oppTwoShot;// 两分出手数
+	private double oppTwoHit;// 两分命中数
 	private double oppTwo;// 两分命中率
-	private int oppFreeHit;// 罚球命中数
-	private int oppFreeShot;// 罚球出手数
+	private double oppFreeHit;// 罚球命中数
+	private double oppFreeShot;// 罚球出手数
 	private double oppFree;// 罚球命中率
-	private int oppDfdRebound;// 后场篮板
-	private int oppOfdRebound;// 前场篮板
-	private int oppTotRebound;// 总篮板
-	private int oppAssist;// 助攻数
-	private int oppSteal;// 抢断数
-	private int oppBlock;// 盖帽数
-	private int oppFault;// 失误
-	private int oppFoul;// 犯规
-	private int oppPoint;// 得分
+	private double oppDfdRebound;// 后场篮板
+	private double oppOfdRebound;// 前场篮板
+	private double oppTotRebound;// 总篮板
+	private double oppAssist;// 助攻数
+	private double oppSteal;// 抢断数
+	private double oppBlock;// 盖帽数
+	private double oppFault;// 失误
+	private double oppFoul;// 犯规
+	private double oppPoint;// 得分
 	// 球队高级赛季数据
-	private int numOfWin;// 赢场数
-	private int numOfLose;// 输场数
 	private double winRate;// 胜率
 	private double pace;// 回合数
 	private double offEFF;// 进攻效率
@@ -80,12 +84,28 @@ public class SeasonTeam {
 		this.season = season;
 	}
 
-	public int getNumOfGame() {
+	public double getNumOfGame() {
 		return numOfGame;
 	}
 
-	public void setNumOfGame(int numOfGame) {
+	public void setNumOfGame(double numOfGame) {
 		this.numOfGame = numOfGame;
+	}
+
+	public double getNumOfWin() {
+		return numOfWin;
+	}
+
+	public void setNumOfWin(double numOfWin) {
+		this.numOfWin = numOfWin;
+	}
+
+	public double getNumOfLose() {
+		return numOfLose;
+	}
+
+	public void setNumOfLose(double numOfLose) {
+		this.numOfLose = numOfLose;
 	}
 
 	public double getMinute() {
@@ -96,19 +116,19 @@ public class SeasonTeam {
 		this.minute = minute;
 	}
 
-	public int getTotalHit() {
+	public double getTotalHit() {
 		return totalHit;
 	}
 
-	public void setTotalHit(int totalHit) {
+	public void setTotalHit(double totalHit) {
 		this.totalHit = totalHit;
 	}
 
-	public int getTotalShot() {
+	public double getTotalShot() {
 		return totalShot;
 	}
 
-	public void setTotalShot(int totalShot) {
+	public void setTotalShot(double totalShot) {
 		this.totalShot = totalShot;
 	}
 
@@ -120,19 +140,19 @@ public class SeasonTeam {
 		this.shot = shot;
 	}
 
-	public int getThreeHit() {
+	public double getThreeHit() {
 		return threeHit;
 	}
 
-	public void setThreeHit(int threeHit) {
+	public void setThreeHit(double threeHit) {
 		this.threeHit = threeHit;
 	}
 
-	public int getThreeShot() {
+	public double getThreeShot() {
 		return threeShot;
 	}
 
-	public void setThreeShot(int threeShot) {
+	public void setThreeShot(double threeShot) {
 		this.threeShot = threeShot;
 	}
 
@@ -144,19 +164,19 @@ public class SeasonTeam {
 		this.three = three;
 	}
 
-	public int getTwoShot() {
+	public double getTwoShot() {
 		return twoShot;
 	}
 
-	public void setTwoShot(int twoShot) {
+	public void setTwoShot(double twoShot) {
 		this.twoShot = twoShot;
 	}
 
-	public int getTwoHit() {
+	public double getTwoHit() {
 		return twoHit;
 	}
 
-	public void setTwoHit(int twoHit) {
+	public void setTwoHit(double twoHit) {
 		this.twoHit = twoHit;
 	}
 
@@ -168,19 +188,19 @@ public class SeasonTeam {
 		this.two = two;
 	}
 
-	public int getFreeHit() {
+	public double getFreeHit() {
 		return freeHit;
 	}
 
-	public void setFreeHit(int freeHit) {
+	public void setFreeHit(double freeHit) {
 		this.freeHit = freeHit;
 	}
 
-	public int getFreeShot() {
+	public double getFreeShot() {
 		return freeShot;
 	}
 
-	public void setFreeShot(int freeShot) {
+	public void setFreeShot(double freeShot) {
 		this.freeShot = freeShot;
 	}
 
@@ -192,91 +212,91 @@ public class SeasonTeam {
 		this.free = free;
 	}
 
-	public int getDfdRebound() {
+	public double getDfdRebound() {
 		return dfdRebound;
 	}
 
-	public void setDfdRebound(int dfdRebound) {
+	public void setDfdRebound(double dfdRebound) {
 		this.dfdRebound = dfdRebound;
 	}
 
-	public int getOfdRebound() {
+	public double getOfdRebound() {
 		return ofdRebound;
 	}
 
-	public void setOfdRebound(int ofdRebound) {
+	public void setOfdRebound(double ofdRebound) {
 		this.ofdRebound = ofdRebound;
 	}
 
-	public int getTotRebound() {
+	public double getTotRebound() {
 		return totRebound;
 	}
 
-	public void setTotRebound(int totRebound) {
+	public void setTotRebound(double totRebound) {
 		this.totRebound = totRebound;
 	}
 
-	public int getAssist() {
+	public double getAssist() {
 		return assist;
 	}
 
-	public void setAssist(int assist) {
+	public void setAssist(double assist) {
 		this.assist = assist;
 	}
 
-	public int getSteal() {
+	public double getSteal() {
 		return steal;
 	}
 
-	public void setSteal(int steal) {
+	public void setSteal(double steal) {
 		this.steal = steal;
 	}
 
-	public int getBlock() {
+	public double getBlock() {
 		return block;
 	}
 
-	public void setBlock(int block) {
+	public void setBlock(double block) {
 		this.block = block;
 	}
 
-	public int getFault() {
+	public double getFault() {
 		return fault;
 	}
 
-	public void setFault(int fault) {
+	public void setFault(double fault) {
 		this.fault = fault;
 	}
 
-	public int getFoul() {
+	public double getFoul() {
 		return foul;
 	}
 
-	public void setFoul(int foul) {
+	public void setFoul(double foul) {
 		this.foul = foul;
 	}
 
-	public int getPoint() {
+	public double getPoint() {
 		return point;
 	}
 
-	public void setPoint(int point) {
+	public void setPoint(double point) {
 		this.point = point;
 	}
 
-	public int getOppTotalHit() {
+	public double getOppTotalHit() {
 		return oppTotalHit;
 	}
 
-	public void setOppTotalHit(int oppTotalHit) {
+	public void setOppTotalHit(double oppTotalHit) {
 		this.oppTotalHit = oppTotalHit;
 	}
 
-	public int getOppTotalShot() {
+	public double getOppTotalShot() {
 		return oppTotalShot;
 	}
 
-	public void setOppTotalShot(int oppTotalShot) {
+	public void setOppTotalShot(double oppTotalShot) {
 		this.oppTotalShot = oppTotalShot;
 	}
 
@@ -288,19 +308,19 @@ public class SeasonTeam {
 		this.oppShot = oppShot;
 	}
 
-	public int getOppThreeHit() {
+	public double getOppThreeHit() {
 		return oppThreeHit;
 	}
 
-	public void setOppThreeHit(int oppThreeHit) {
+	public void setOppThreeHit(double oppThreeHit) {
 		this.oppThreeHit = oppThreeHit;
 	}
 
-	public int getOppThreeShot() {
+	public double getOppThreeShot() {
 		return oppThreeShot;
 	}
 
-	public void setOppThreeShot(int oppThreeShot) {
+	public void setOppThreeShot(double oppThreeShot) {
 		this.oppThreeShot = oppThreeShot;
 	}
 
@@ -312,19 +332,19 @@ public class SeasonTeam {
 		this.oppThree = oppThree;
 	}
 
-	public int getOppTwoShot() {
+	public double getOppTwoShot() {
 		return oppTwoShot;
 	}
 
-	public void setOppTwoShot(int oppTwoShot) {
+	public void setOppTwoShot(double oppTwoShot) {
 		this.oppTwoShot = oppTwoShot;
 	}
 
-	public int getOppTwoHit() {
+	public double getOppTwoHit() {
 		return oppTwoHit;
 	}
 
-	public void setOppTwoHit(int oppTwoHit) {
+	public void setOppTwoHit(double oppTwoHit) {
 		this.oppTwoHit = oppTwoHit;
 	}
 
@@ -336,19 +356,19 @@ public class SeasonTeam {
 		this.oppTwo = oppTwo;
 	}
 
-	public int getOppFreeHit() {
+	public double getOppFreeHit() {
 		return oppFreeHit;
 	}
 
-	public void setOppFreeHit(int oppFreeHit) {
+	public void setOppFreeHit(double oppFreeHit) {
 		this.oppFreeHit = oppFreeHit;
 	}
 
-	public int getOppFreeShot() {
+	public double getOppFreeShot() {
 		return oppFreeShot;
 	}
 
-	public void setOppFreeShot(int oppFreeShot) {
+	public void setOppFreeShot(double oppFreeShot) {
 		this.oppFreeShot = oppFreeShot;
 	}
 
@@ -360,92 +380,76 @@ public class SeasonTeam {
 		this.oppFree = oppFree;
 	}
 
-	public int getOppDfdRebound() {
+	public double getOppDfdRebound() {
 		return oppDfdRebound;
 	}
 
-	public void setOppDfdRebound(int oppDfdRebound) {
+	public void setOppDfdRebound(double oppDfdRebound) {
 		this.oppDfdRebound = oppDfdRebound;
 	}
 
-	public int getOppOfdRebound() {
+	public double getOppOfdRebound() {
 		return oppOfdRebound;
 	}
 
-	public void setOppOfdRebound(int oppOfdRebound) {
+	public void setOppOfdRebound(double oppOfdRebound) {
 		this.oppOfdRebound = oppOfdRebound;
 	}
 
-	public int getOppTotRebound() {
+	public double getOppTotRebound() {
 		return oppTotRebound;
 	}
 
-	public void setOppTotRebound(int oppTotRebound) {
+	public void setOppTotRebound(double oppTotRebound) {
 		this.oppTotRebound = oppTotRebound;
 	}
 
-	public int getOppAssist() {
+	public double getOppAssist() {
 		return oppAssist;
 	}
 
-	public void setOppAssist(int oppAssist) {
+	public void setOppAssist(double oppAssist) {
 		this.oppAssist = oppAssist;
 	}
 
-	public int getOppSteal() {
+	public double getOppSteal() {
 		return oppSteal;
 	}
 
-	public void setOppSteal(int oppSteal) {
+	public void setOppSteal(double oppSteal) {
 		this.oppSteal = oppSteal;
 	}
 
-	public int getOppBlock() {
+	public double getOppBlock() {
 		return oppBlock;
 	}
 
-	public void setOppBlock(int oppBlock) {
+	public void setOppBlock(double oppBlock) {
 		this.oppBlock = oppBlock;
 	}
 
-	public int getOppFault() {
+	public double getOppFault() {
 		return oppFault;
 	}
 
-	public void setOppFault(int oppFault) {
+	public void setOppFault(double oppFault) {
 		this.oppFault = oppFault;
 	}
 
-	public int getOppFoul() {
+	public double getOppFoul() {
 		return oppFoul;
 	}
 
-	public void setOppFoul(int oppFoul) {
+	public void setOppFoul(double oppFoul) {
 		this.oppFoul = oppFoul;
 	}
 
-	public int getOppPoint() {
+	public double getOppPoint() {
 		return oppPoint;
 	}
 
-	public void setOppPoint(int oppPoint) {
+	public void setOppPoint(double oppPoint) {
 		this.oppPoint = oppPoint;
-	}
-
-	public int getNumOfWin() {
-		return numOfWin;
-	}
-
-	public void setNumOfWin(int numOfWin) {
-		this.numOfWin = numOfWin;
-	}
-
-	public int getNumOfLose() {
-		return numOfLose;
-	}
-
-	public void setNumOfLose(int numOfLose) {
-		this.numOfLose = numOfLose;
 	}
 
 	public double getWinRate() {

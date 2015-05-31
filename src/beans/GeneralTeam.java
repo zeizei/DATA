@@ -1,6 +1,10 @@
 package beans;
 
-public class GeneralTeam {
+public class GeneralTeam extends Bean{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 主键
 	private String teamName;
 	private String location;

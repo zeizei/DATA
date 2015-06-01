@@ -10,7 +10,6 @@ public class GameTeam extends Bean {
 	private String teamName;// 球队名称
 	// 球队普通比赛数据
 	private double[] quarterPoint;// 每节比赛得分（包括季后赛）
-	//
 	private double minute;// 比赛总时间
 	private double totHit;// 总命中
 	private double totShot;// 总出手

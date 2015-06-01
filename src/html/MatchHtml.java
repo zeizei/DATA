@@ -18,17 +18,19 @@ import beans.GeneralMatch;
 public class MatchHtml extends HtmlReader {
 	private HashMap<String, GamePlayer> gamePlayerMap;
 	private HashMap<String, GameTeam> gameTeamMap;
+	private String[] advanceFields = { "realShot", "shotEFF", "threeEFF", "freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF",
+			"offEFF", "defEFF" };
 	private NodeList nodeList;
 	private String homeTeam;
 	private String guestTeam;
 	private String date;
 	private final int NORMAL_TABLE_COLUMN_NUM = 21;// 普通数据表格列数
 	private final int ADVANCE_TABLE_COLUMN_NUM = 16;// 高级数据表格列数
-	private final int QUARTER_POINT_TABLE = 8;// 每节比赛得分表格
-	private final int HOME_NORMAL_TABLE = 10;// 主队普通数据
-	private final int HOME_ADVANCE_TABLE = 11;// 主队高级数据
-	private final int GUEST_NORMAL_TABLE = 12;// 客队普通数据
-	private final int GUEST_ADVANCE_TABLE = 13;// 客队
+	private int QUARTER_POINT_TABLE;// 每节比赛得分表格
+	private int HOME_NORMAL_TABLE;// 主队普通数据
+	private int HOME_ADVANCE_TABLE;// 主队高级数据
+	private int GUEST_NORMAL_TABLE;// 客队普通数据
+	private int GUEST_ADVANCE_TABLE;// 客队
 
 	public MatchHtml(String urlString, GeneralMatch generalMatch) {
 		super(urlString);
@@ -37,11 +39,11 @@ public class MatchHtml extends HtmlReader {
 				this.homeTeam = generalMatch.getHomeTeam();
 				this.guestTeam = generalMatch.getGuestTeam();
 				this.date = generalMatch.getDate();
-			}
-			if (this.homeTeam != null && this.guestTeam != null && this.date != null) {
-				gamePlayerMap = new HashMap<String, GamePlayer>();
-				gameTeamMap = new HashMap<String, GameTeam>();
-				this.readPage();
+				if (this.homeTeam != null && this.guestTeam != null && this.date != null) {
+					gamePlayerMap = new HashMap<String, GamePlayer>();
+					gameTeamMap = new HashMap<String, GameTeam>();
+					this.readPage();
+				}
 			}
 		}
 	}
@@ -56,6 +58,36 @@ public class MatchHtml extends HtmlReader {
 			e.printStackTrace();
 		}
 		if (nodeList != null) {
+			int i = 0;
+			while (i < nodeList.size()) {
+				if (nodeList.elementAt(i) instanceof TableTag) {
+					TableTag table = (TableTag) nodeList.elementAt(i);
+					int rowNum = table.getRowCount();
+					if (rowNum > 3) {
+						TableRow row = table.getRow(3);
+						int columnNum = row.getColumnCount();
+						if (columnNum == this.NORMAL_TABLE_COLUMN_NUM) {
+							if (nodeList.elementAt(i + 1) instanceof TableTag) {
+								TableTag nextTable = (TableTag) nodeList.elementAt(i + 1);
+								int rowCount = nextTable.getRowCount();
+								if (rowCount > 3) {
+									TableRow row3 = nextTable.getRow(3);
+									int columnCount = row3.getColumnCount();
+									if (columnCount == this.ADVANCE_TABLE_COLUMN_NUM) {
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				i++;
+			}// 用两个表格做判断
+			this.QUARTER_POINT_TABLE = i - 2;
+			this.HOME_NORMAL_TABLE = i;
+			this.HOME_ADVANCE_TABLE = i + 1;
+			this.GUEST_NORMAL_TABLE = i + 2;
+			this.GUEST_ADVANCE_TABLE = i + 3;
 			this.readNormalTable(this.HOME_NORMAL_TABLE);
 			this.readNormalTable(this.GUEST_NORMAL_TABLE);
 			this.readAdvanceTable(this.HOME_ADVANCE_TABLE);
@@ -68,6 +100,10 @@ public class MatchHtml extends HtmlReader {
 			TableTag tag = (TableTag) nodeList.elementAt(advTable);
 			TableRow[] rows = tag.getRows();
 			if (rows != null) {
+				String teamName = homeTeam;
+				if (advTable == this.GUEST_ADVANCE_TABLE) {
+					teamName = guestTeam;
+				}
 				int i = 2;
 				while (i < rows.length && rows[i] != null && rows[i].getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM) {
 					this.dwOnePlayerAdvance(rows[i]);
@@ -76,9 +112,10 @@ public class MatchHtml extends HtmlReader {
 				i++;
 				while (i < rows.length - 1 && rows[i] != null && rows[i].getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM) {
 					this.dwOnePlayerAdvance(rows[i]);
+
 					i++;
 				}
-				this.dwOneTeamAdvance(rows[rows.length - 1]);
+				this.dwOneTeamAdvance(rows[rows.length - 1], teamName);
 			}
 		}
 	}// 读取比赛高级数据表格
@@ -87,13 +124,9 @@ public class MatchHtml extends HtmlReader {
 		if (nodeList.elementAt(norTable) instanceof TableTag) {
 			TableTag tag = (TableTag) nodeList.elementAt(norTable);
 			TableRow[] rows = tag.getRows();
-
 			if (rows != null) {
-				String teamName = null;
-				if (norTable == this.HOME_NORMAL_TABLE) {
-					teamName = homeTeam;
-				}
-				else if (norTable == this.GUEST_NORMAL_TABLE) {
+				String teamName = homeTeam;
+				if (norTable == this.GUEST_NORMAL_TABLE) {
 					teamName = guestTeam;
 				}
 				int i = 2;
@@ -119,23 +152,12 @@ public class MatchHtml extends HtmlReader {
 			for (int i = 0; i < this.NORMAL_TABLE_COLUMN_NUM; i++) {
 				cellString[i] = columns[i].toPlainTextString();
 			}
-
+			String playerName = cellString[0];
 			String minuteString = cellString[1];
-			double minute = 0;
-			String[] part = minuteString.split(":");
-			if (part != null) {
-				if (part.length == 2) {
-					minute = this.toDouble(part[0]) + this.toDouble(part[1]) / 60.0;
-				}
-				else if (part.length == 1) {
-					minute = this.toDouble(part[0]);
-				}
-			}
-			cell[0] = minute;
+			cell[0] = this.getMinute(minuteString);
 			for (int i = 1; i < this.NORMAL_TABLE_COLUMN_NUM - 1; i++) {
 				cell[i] = this.toDouble(cellString[i + 1]);
 			}
-			String playerName = cellString[0];
 			String[] tableFields = { "minute", "totHit", "totShot", "shot", "threeHit", "threeShot", "three", "freeHit", "freeShot", "free", "offRebound", "defRebound", "totRebound", "assist",
 					"steal", "block", "fault", "foul", "point", "plus" };
 			GamePlayer gamePlayer = new GamePlayer();
@@ -149,6 +171,21 @@ public class MatchHtml extends HtmlReader {
 		}
 	}// 处理一个球员的比赛普通数据
 
+	private double getMinute(String minuteString) {
+		double minute = 0;
+		String[] part = minuteString.split(":");
+		if (part != null) {
+			if (part.length == 2) {
+				minute = this.toDouble(part[0]) + this.toDouble(part[1]) / 60.0;
+				minute = super.cutTail(minute, 1);
+			}
+			else if (part.length == 1) {
+				minute = this.toDouble(part[0]);
+			}
+		}
+		return minute;
+	}
+
 	private void dwOneTeamNormal(TableRow tableRow, String teamName) {
 		if (tableRow != null && tableRow.getColumnCount() == this.NORMAL_TABLE_COLUMN_NUM) {
 			TableColumn[] columns = tableRow.getColumns();
@@ -158,17 +195,7 @@ public class MatchHtml extends HtmlReader {
 				cellString[i] = columns[i].toPlainTextString();
 			}
 			String minuteString = cellString[1];
-			double minute = 0;
-			String[] part = minuteString.split(":");
-			if (part != null) {
-				if (part.length == 2) {
-					minute = this.toDouble(part[0]) + this.toDouble(part[1]) / 60.0;
-				}
-				else if (part.length == 1) {
-					minute = this.toDouble(part[0]);
-				}
-			}
-			cell[0] = minute;
+			cell[0] = this.getMinute(minuteString);
 			for (int i = 1; i < this.NORMAL_TABLE_COLUMN_NUM - 2; i++) {
 				cell[i] = this.toDouble(cellString[i + 1]);
 			}
@@ -217,22 +244,43 @@ public class MatchHtml extends HtmlReader {
 	private void dwOnePlayerAdvance(TableRow tableRow) {
 		if (tableRow != null && tableRow.getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM) {
 			TableColumn[] columns = tableRow.getColumns();
+			String[] cellString = new String[this.ADVANCE_TABLE_COLUMN_NUM];
+			Double[] cell = new Double[this.ADVANCE_TABLE_COLUMN_NUM - 2];
 			for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM; i++) {
-				System.out.print(columns[i].toPlainTextString());
-				System.out.print("--");
+				cellString[i] = columns[i].toPlainTextString();
 			}
-			System.out.println();
+			String playerName = cellString[0];
+			for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM - 2; i++) {
+				cell[i] = this.toDouble(cellString[i + 2]);
+			}
+			if (this.gamePlayerMap.containsKey(playerName)) {
+				GamePlayer gamePlayer = this.gamePlayerMap.get(playerName);
+				boolean isSucceed = super.AutoEncapsulate(gamePlayer, this.advanceFields, cell);
+				if (!isSucceed) {
+					this.gamePlayerMap.remove(playerName);
+				}
+			}
 		}
 	}// 处理中一个球员的比赛高级数据
 
-	private void dwOneTeamAdvance(TableRow tableRow) {
-		if (tableRow != null && tableRow.getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM) {
+	private void dwOneTeamAdvance(TableRow tableRow, String teamName) {
+		if (tableRow != null && tableRow.getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM && teamName != null) {
 			TableColumn[] columns = tableRow.getColumns();
+			String[] cellString = new String[this.ADVANCE_TABLE_COLUMN_NUM];
+			Double[] cell = new Double[this.ADVANCE_TABLE_COLUMN_NUM - 2];
 			for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM; i++) {
-				System.out.print(columns[i].toPlainTextString());
-				System.out.print("--");
+				cellString[i] = columns[i].toPlainTextString();
 			}
-			System.out.println();
+			for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM - 2; i++) {
+				cell[i] = this.toDouble(cellString[i + 2]);
+			}
+			if (this.gameTeamMap.containsKey(teamName)) {
+				GameTeam gameTeam = this.gameTeamMap.get(teamName);
+				boolean isSucceed = super.AutoEncapsulate(gameTeam, this.advanceFields, cell);
+				if (!isSucceed) {
+					this.gameTeamMap.remove(gameTeam);
+				}
+			}
 		}
 	}// 处理一个球队的比赛高级数据
 

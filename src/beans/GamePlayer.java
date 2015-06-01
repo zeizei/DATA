@@ -6,8 +6,8 @@ public class GamePlayer extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String date;// 比赛时间
-	private String playerName;// 球员姓名
+	protected String date;// 比赛时间
+	protected String playerName;// 球员姓名
 	// 球员基础比赛信息
 	private String teamName;// 球队名称
 	private double isStart;// 是否首发
@@ -56,10 +56,16 @@ public class GamePlayer extends Bean {
 	}
 
 	public String getPlayerName() {
+		if (this.playerName.contains("'")) {
+			this.playerName = this.playerName.replace('\'', '-');
+		}
 		return playerName;
 	}
 
 	public void setPlayerName(String playerName) {
+		if (playerName.contains("'")) {
+			playerName = playerName.replace('\'', '-');
+		}
 		this.playerName = playerName;
 	}
 

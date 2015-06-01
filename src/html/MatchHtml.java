@@ -204,7 +204,7 @@ public class MatchHtml extends HtmlReader {
 			GameTeam gameTeam = new GameTeam();
 			boolean isTableSucceed = super.AutoEncapsulate(gameTeam, tableFields, cell);
 			String[] generalFields = { "date", "teamName", "quarterPoint" };
-			double[] quarterPoint = this.getQuarterPoint(teamName);
+			String quarterPoint = this.getQuarterPoint(teamName);
 			if (quarterPoint != null) {
 				Object[] contents = { this.date, teamName, quarterPoint };
 				boolean isGeneralSucceed = super.AutoEncapsulate(gameTeam, generalFields, contents);
@@ -215,7 +215,7 @@ public class MatchHtml extends HtmlReader {
 		}
 	}// 处理一个球队的比赛普通数据
 
-	private double[] getQuarterPoint(String teamName) {
+	private String getQuarterPoint(String teamName) {
 		if (nodeList.elementAt(this.QUARTER_POINT_TABLE) instanceof TableTag) {
 			TableTag tag = (TableTag) nodeList.elementAt(this.QUARTER_POINT_TABLE);
 			TableRow[] rows = tag.getRows();
@@ -230,11 +230,16 @@ public class MatchHtml extends HtmlReader {
 					for (int i = 0; i < cellString.length; i++) {
 						cellString[i] = columns[i + 1].toPlainTextString();
 					}
-					double[] result = new double[cellString.length];
+					int[] result = new int[cellString.length];
 					for (int i = 0; i < cellString.length; i++) {
-						result[i] = super.toDouble(cellString[i]);
+						result[i] = super.toInt(cellString[i]);
 					}
-					return result;
+					StringBuffer buffer = new StringBuffer();
+					for (int i = 0; i < result.length - 1; i++) {
+						buffer.append(result[i]).append("---");
+					}
+					buffer.append(result[result.length - 1]);
+					return buffer.toString();
 				}
 			}
 		}

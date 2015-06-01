@@ -6,9 +6,9 @@ public class GeneralTeam extends Bean{
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String teamName;
-	private String location;
-	private int seasons;
+	protected String teamName;
+	protected String location;
+	protected int seasons;
 	//
 	private int playOff;
 	private int championship;

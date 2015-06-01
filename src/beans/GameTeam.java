@@ -6,10 +6,10 @@ public class GameTeam extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String date;// 比赛日期
-	private String teamName;// 球队名称
+	protected String date;// 比赛日期
+	protected String teamName;// 球队名称
 	// 球队普通比赛数据
-	private double[] quarterPoint;// 每节比赛得分（包括季后赛）
+	private String quarterPoint;// 每节比赛得分（包括季后赛）
 	private double minute;// 比赛总时间
 	private double totHit;// 总命中
 	private double totShot;// 总出手
@@ -62,11 +62,11 @@ public class GameTeam extends Bean {
 		this.teamName = teamName;
 	}
 
-	public double[] getQuarterPoint() {
+	public String getQuarterPoint() {
 		return quarterPoint;
 	}
 
-	public void setQuarterPoint(double[] quarterPoint) {
+	public void setQuarterPoint(String quarterPoint) {
 		this.quarterPoint = quarterPoint;
 	}
 

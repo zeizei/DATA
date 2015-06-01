@@ -6,9 +6,9 @@ public class SeasonPlayer extends Bean{
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String name;// 姓名
-	private String season;// 赛季
-	private String teamName;// 球队名称
+	protected String name;// 姓名
+	protected String season;// 赛季
+	protected String teamName;// 球队名称
 	// 求普通赛季数据
 	private double age;// 年龄
 	private String position;// 位置

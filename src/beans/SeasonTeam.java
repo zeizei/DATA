@@ -1,13 +1,13 @@
 package beans;
 
-public class SeasonTeam extends Bean{
+public class SeasonTeam extends Bean {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String teamName;
-	private String season;
+	protected String teamName;
+	protected String season;
 	// 球队普通赛季数据
 	private double numOfGame;// 比赛场数
 	private double numOfWin;// 赢场数

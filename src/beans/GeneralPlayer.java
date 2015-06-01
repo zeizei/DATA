@@ -1,13 +1,13 @@
 package beans;
 
-public class GeneralPlayer extends Bean{
+public class GeneralPlayer extends Bean {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	private String playerName;
-	private String birthday;
+	protected String playerName;
+	protected String birthday;
 	//
 	private String position;
 	private String shoots;

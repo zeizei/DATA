@@ -1,6 +1,6 @@
 package beans;
 
-public class GeneralTeam extends Bean{
+public class GeneralTeam extends Bean {
 	/**
 	 * 
 	 */
@@ -8,8 +8,8 @@ public class GeneralTeam extends Bean{
 	// 主键
 	protected String teamName;
 	protected String location;
-	protected int seasons;
 	//
+	private int seasons;
 	private int playOff;
 	private int championship;
 

@@ -1,12 +1,12 @@
 package beans;
 
-public class SeasonPlayer extends Bean{
+public class SeasonPlayer extends Bean {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String name;// 姓名
+	protected String playerName;// 球员名称
 	protected String season;// 赛季
 	protected String teamName;// 球队名称
 	// 求普通赛季数据
@@ -58,12 +58,18 @@ public class SeasonPlayer extends Bean{
 	private double BoxPM;//
 	private double replaceValue;// 替换价值
 
-	public String getName() {
-		return name;
+	public String getPlayerName() {
+		if (this.playerName.contains("'")) {
+			this.playerName = this.playerName.replace('\'', '-');
+		}
+		return playerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPlayerName(String playerName) {
+		if (playerName.contains("'")) {
+			playerName = playerName.replace('\'', '-');
+		}
+		this.playerName = playerName;
 	}
 
 	public String getSeason() {
@@ -449,5 +455,4 @@ public class SeasonPlayer extends Bean{
 	public void setReplaceValue(double replaceValue) {
 		this.replaceValue = replaceValue;
 	}
-
 }

@@ -11,6 +11,10 @@ import database.DB;
 import beans.GamePlayer;
 import beans.GameTeam;
 import beans.GeneralMatch;
+import beans.GeneralPlayer;
+import beans.GeneralTeam;
+import beans.SeasonPlayer;
+import beans.SeasonTeam;
 
 public class Task {
 	private DB db = DB.getInstance();
@@ -46,5 +50,13 @@ public class Task {
 
 	public void getTeam() {
 
+	}
+
+	public void createDB() {
+		DB db = DB.getInstance();
+		db.update(new GeneralPlayer().createTableStr());
+		db.update(new GeneralTeam().createTableStr());
+		db.update(new SeasonPlayer().createTableStr());
+		db.update(new SeasonTeam().createTableStr());
 	}
 }

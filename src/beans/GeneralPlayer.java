@@ -5,32 +5,44 @@ public class GeneralPlayer extends Bean {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// 主键
+	// 主键 playerName,birthday
 	protected String playerName;
-	protected String birthday;
-	//
+	private int startYear;
+	private int finishYear;
 	private String position;
-	private String shoots;
 	private String height;
 	private String weight;
-	private String highSchool;
+	protected String birthday;
 	private String collage;
-	private String draft;
 
 	public String getPlayerName() {
+		if (this.playerName.contains("'")) {
+			this.playerName = this.playerName.replace('\'', '-');
+		}
 		return playerName;
 	}
 
 	public void setPlayerName(String playerName) {
+		if (playerName.contains("'")) {
+			playerName = playerName.replace('\'', '-');
+		}
 		this.playerName = playerName;
 	}
 
-	public String getBirthday() {
-		return birthday;
+	public int getStartYear() {
+		return startYear;
 	}
 
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setStartYear(int startYear) {
+		this.startYear = startYear;
+	}
+
+	public int getFinishYear() {
+		return finishYear;
+	}
+
+	public void setFinishYear(int finishYear) {
+		this.finishYear = finishYear;
 	}
 
 	public String getPosition() {
@@ -39,14 +51,6 @@ public class GeneralPlayer extends Bean {
 
 	public void setPosition(String position) {
 		this.position = position;
-	}
-
-	public String getShoots() {
-		return shoots;
-	}
-
-	public void setShoots(String shoots) {
-		this.shoots = shoots;
 	}
 
 	public String getHeight() {
@@ -65,12 +69,12 @@ public class GeneralPlayer extends Bean {
 		this.weight = weight;
 	}
 
-	public String getHighSchool() {
-		return highSchool;
+	public String getBirthday() {
+		return birthday;
 	}
 
-	public void setHighSchool(String highSchool) {
-		this.highSchool = highSchool;
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getCollage() {
@@ -81,11 +85,7 @@ public class GeneralPlayer extends Bean {
 		this.collage = collage;
 	}
 
-	public String getDraft() {
-		return draft;
-	}
-
-	public void setDraft(String draft) {
-		this.draft = draft;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 }

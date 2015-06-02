@@ -78,14 +78,16 @@ public class GeneralPlayer extends Bean {
 	}
 
 	public String getCollage() {
-		return collage;
+		if (this.collage.contains("'")) {
+			this.collage = this.collage.replace('\'', '-');
+		}
+		return this.collage;
 	}
 
 	public void setCollage(String collage) {
+		if (collage.contains("'")) {
+			collage = collage.replace('\'', '-');
+		}
 		this.collage = collage;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 }

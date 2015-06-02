@@ -24,6 +24,7 @@ public class SeasonPlayer extends Bean {
 	private double twoShot;// 两分出手数
 	private double twoHit;// 两分命中数
 	private double two;// 两分命中率
+	private double shotEFF;// 投篮效率
 	private double freeHit;// 罚球命中数
 	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
@@ -39,7 +40,6 @@ public class SeasonPlayer extends Bean {
 	// 球员高级赛季数据
 	private double playerEFF;// 球员效率值
 	private double realShot;// 真实命中率
-	private double shotEFF;// 投篮效率
 	private double threeEFF;// 三分效率
 	private double freeEFF;// 罚球效率
 	private double offReboundEFF;// 进攻篮板效率
@@ -53,9 +53,10 @@ public class SeasonPlayer extends Bean {
 	private double offWinShare;
 	private double defWinShare;
 	private double winShare;
-	private double offBoxPM;
-	private double defBoxPM;
-	private double BoxPM;//
+	private double winSharePer48;
+	private double offBoxPM;// 进攻贡献值
+	private double defBoxPM;// 防守贡献值
+	private double BoxPM;// 贡献值
 	private double replaceValue;// 替换价值
 
 	public String getPlayerName() {
@@ -454,5 +455,13 @@ public class SeasonPlayer extends Bean {
 
 	public void setReplaceValue(double replaceValue) {
 		this.replaceValue = replaceValue;
+	}
+
+	public double getWinSharePer48() {
+		return winSharePer48;
+	}
+
+	public void setWinSharePer48(double winSharePer48) {
+		this.winSharePer48 = winSharePer48;
 	}
 }

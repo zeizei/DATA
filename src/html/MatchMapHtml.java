@@ -78,7 +78,6 @@ public class MatchMapHtml extends HtmlReader {
 			String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
 			int guestPoint = this.toIntPoint(guestPointStr);
 			if (homePoint != -1 && guestPoint != -1 && homeTeam != null && guestTeam != null && (homeTeam = homeTeam.trim()) != null && (guestTeam = guestTeam.trim()) != null) {
-
 				isCorrect = true;
 			}
 			if (isCorrect) {

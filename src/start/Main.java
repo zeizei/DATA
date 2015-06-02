@@ -7,6 +7,5 @@ public class Main {
 		// task.createDB();
 		// task.getMatchs();
 		task.getPlayer();
-
 	}
 }

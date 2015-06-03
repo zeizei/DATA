@@ -6,13 +6,10 @@ public class SeasonTeam extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String teamName;
-	protected String season;
-	protected int isPlayOff;// 是否为季后赛
+	protected String teamName;// 球员名称
+	protected String season;// 赛季
 	// 球队普通赛季数据
 	private double numOfGame;// 比赛场数
-	private double numOfWin;// 赢场数
-	private double numOfLose;// 输场数
 	private double minute;// 总时间
 	//
 	private double totalHit;// 总命中数
@@ -27,8 +24,8 @@ public class SeasonTeam extends Bean {
 	private double freeHit;// 罚球命中数
 	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private double dfdRebound;// 后场篮板
 	private double ofdRebound;// 前场篮板
+	private double dfdRebound;// 后场篮板
 	private double totRebound;// 总篮板
 	private double assist;// 助攻数
 	private double steal;// 抢断数
@@ -49,8 +46,8 @@ public class SeasonTeam extends Bean {
 	private double oppFreeHit;// 罚球命中数
 	private double oppFreeShot;// 罚球出手数
 	private double oppFree;// 罚球命中率
-	private double oppDfdRebound;// 后场篮板
 	private double oppOfdRebound;// 前场篮板
+	private double oppDfdRebound;// 后场篮板
 	private double oppTotRebound;// 总篮板
 	private double oppAssist;// 助攻数
 	private double oppSteal;// 抢断数
@@ -59,15 +56,28 @@ public class SeasonTeam extends Bean {
 	private double oppFoul;// 犯规
 	private double oppPoint;// 得分
 	// 球队高级赛季数据
-	private double winRate;// 胜率
-	private double pace;// 回合数
+	private double avgAge;// 球队平均年龄
+	private double numOfWin;// 赢场数
+	private double numOfLose;// 输场数
+	private double pointOfWin;// 净胜分
+	private double strengthOfSchedule;//
+	private double simpleRatingSystem;//
 	private double offEFF;// 进攻效率
 	private double defEFF;// 防守效率
-	private double offReboundEFF;// 进攻篮板效率
-	private double defReboundEFF;// 防守篮板效率
-	private double shotEFF;// 投篮效率
-	private double threeEFF;// 三分效率
+	private double pace;// 回合数
 	private double freeEFF;// 罚球效率
+	private double threeEFF;// 三分效率
+	private double realShot;// 真实命中率
+	private double shotEFF;// 投篮效率
+	private double faultEFF;// 失误率
+	private double offReboundEFF;// 进攻篮板效率
+	private double freePerFieldGoal;
+	private double oppShotEFF;// 投篮效率
+	private double oppFaultEFF;// 失误率
+	private double defReboundEFF;// 防守篮板效率
+	private double oppFreePerFieldGoal;//
+	private String arean;// 球馆
+	private double attendance;// 上座人数
 
 	public String getTeamName() {
 		return teamName;
@@ -85,36 +95,12 @@ public class SeasonTeam extends Bean {
 		this.season = season;
 	}
 
-	public int getIsPlayOff() {
-		return isPlayOff;
-	}
-
-	public void setIsPlayOff(int isPlayOff) {
-		this.isPlayOff = isPlayOff;
-	}
-
 	public double getNumOfGame() {
 		return numOfGame;
 	}
 
 	public void setNumOfGame(double numOfGame) {
 		this.numOfGame = numOfGame;
-	}
-
-	public double getNumOfWin() {
-		return numOfWin;
-	}
-
-	public void setNumOfWin(double numOfWin) {
-		this.numOfWin = numOfWin;
-	}
-
-	public double getNumOfLose() {
-		return numOfLose;
-	}
-
-	public void setNumOfLose(double numOfLose) {
-		this.numOfLose = numOfLose;
 	}
 
 	public double getMinute() {
@@ -221,20 +207,20 @@ public class SeasonTeam extends Bean {
 		this.free = free;
 	}
 
-	public double getDfdRebound() {
-		return dfdRebound;
-	}
-
-	public void setDfdRebound(double dfdRebound) {
-		this.dfdRebound = dfdRebound;
-	}
-
 	public double getOfdRebound() {
 		return ofdRebound;
 	}
 
 	public void setOfdRebound(double ofdRebound) {
 		this.ofdRebound = ofdRebound;
+	}
+
+	public double getDfdRebound() {
+		return dfdRebound;
+	}
+
+	public void setDfdRebound(double dfdRebound) {
+		this.dfdRebound = dfdRebound;
 	}
 
 	public double getTotRebound() {
@@ -389,20 +375,20 @@ public class SeasonTeam extends Bean {
 		this.oppFree = oppFree;
 	}
 
-	public double getOppDfdRebound() {
-		return oppDfdRebound;
-	}
-
-	public void setOppDfdRebound(double oppDfdRebound) {
-		this.oppDfdRebound = oppDfdRebound;
-	}
-
 	public double getOppOfdRebound() {
 		return oppOfdRebound;
 	}
 
 	public void setOppOfdRebound(double oppOfdRebound) {
 		this.oppOfdRebound = oppOfdRebound;
+	}
+
+	public double getOppDfdRebound() {
+		return oppDfdRebound;
+	}
+
+	public void setOppDfdRebound(double oppDfdRebound) {
+		this.oppDfdRebound = oppDfdRebound;
 	}
 
 	public double getOppTotRebound() {
@@ -461,20 +447,52 @@ public class SeasonTeam extends Bean {
 		this.oppPoint = oppPoint;
 	}
 
-	public double getWinRate() {
-		return winRate;
+	public double getAvgAge() {
+		return avgAge;
 	}
 
-	public void setWinRate(double winRate) {
-		this.winRate = winRate;
+	public void setAvgAge(double avgAge) {
+		this.avgAge = avgAge;
 	}
 
-	public double getPace() {
-		return pace;
+	public double getNumOfWin() {
+		return numOfWin;
 	}
 
-	public void setPace(double pace) {
-		this.pace = pace;
+	public void setNumOfWin(double numOfWin) {
+		this.numOfWin = numOfWin;
+	}
+
+	public double getNumOfLose() {
+		return numOfLose;
+	}
+
+	public void setNumOfLose(double numOfLose) {
+		this.numOfLose = numOfLose;
+	}
+
+	public double getPointOfWin() {
+		return pointOfWin;
+	}
+
+	public void setPointOfWin(double pointOfWin) {
+		this.pointOfWin = pointOfWin;
+	}
+
+	public double getStrengthOfSchedule() {
+		return strengthOfSchedule;
+	}
+
+	public void setStrengthOfSchedule(double strengthOfSchedule) {
+		this.strengthOfSchedule = strengthOfSchedule;
+	}
+
+	public double getSimpleRatingSystem() {
+		return simpleRatingSystem;
+	}
+
+	public void setSimpleRatingSystem(double simpleRatingSystem) {
+		this.simpleRatingSystem = simpleRatingSystem;
 	}
 
 	public double getOffEFF() {
@@ -493,28 +511,20 @@ public class SeasonTeam extends Bean {
 		this.defEFF = defEFF;
 	}
 
-	public double getOffReboundEFF() {
-		return offReboundEFF;
+	public double getPace() {
+		return pace;
 	}
 
-	public void setOffReboundEFF(double offReboundEFF) {
-		this.offReboundEFF = offReboundEFF;
+	public void setPace(double pace) {
+		this.pace = pace;
 	}
 
-	public double getDefReboundEFF() {
-		return defReboundEFF;
+	public double getFreeEFF() {
+		return freeEFF;
 	}
 
-	public void setDefReboundEFF(double defReboundEFF) {
-		this.defReboundEFF = defReboundEFF;
-	}
-
-	public double getShotEFF() {
-		return shotEFF;
-	}
-
-	public void setShotEFF(double shotEFF) {
-		this.shotEFF = shotEFF;
+	public void setFreeEFF(double freeEFF) {
+		this.freeEFF = freeEFF;
 	}
 
 	public double getThreeEFF() {
@@ -525,11 +535,91 @@ public class SeasonTeam extends Bean {
 		this.threeEFF = threeEFF;
 	}
 
-	public double getFreeEFF() {
-		return freeEFF;
+	public double getRealShot() {
+		return realShot;
 	}
 
-	public void setFreeEFF(double freeEFF) {
-		this.freeEFF = freeEFF;
+	public void setRealShot(double realShot) {
+		this.realShot = realShot;
+	}
+
+	public double getShotEFF() {
+		return shotEFF;
+	}
+
+	public void setShotEFF(double shotEFF) {
+		this.shotEFF = shotEFF;
+	}
+
+	public double getFaultEFF() {
+		return faultEFF;
+	}
+
+	public void setFaultEFF(double faultEFF) {
+		this.faultEFF = faultEFF;
+	}
+
+	public double getOffReboundEFF() {
+		return offReboundEFF;
+	}
+
+	public void setOffReboundEFF(double offReboundEFF) {
+		this.offReboundEFF = offReboundEFF;
+	}
+
+	public double getFreePerFieldGoal() {
+		return freePerFieldGoal;
+	}
+
+	public void setFreePerFieldGoal(double freePerFieldGoal) {
+		this.freePerFieldGoal = freePerFieldGoal;
+	}
+
+	public double getOppShotEFF() {
+		return oppShotEFF;
+	}
+
+	public void setOppShotEFF(double oppShotEFF) {
+		this.oppShotEFF = oppShotEFF;
+	}
+
+	public double getOppFaultEFF() {
+		return oppFaultEFF;
+	}
+
+	public void setOppFaultEFF(double oppFaultEFF) {
+		this.oppFaultEFF = oppFaultEFF;
+	}
+
+	public double getDefReboundEFF() {
+		return defReboundEFF;
+	}
+
+	public void setDefReboundEFF(double defReboundEFF) {
+		this.defReboundEFF = defReboundEFF;
+	}
+
+	public double getOppFreePerFieldGoal() {
+		return oppFreePerFieldGoal;
+	}
+
+	public void setOppFreePerFieldGoal(double oppFreePerFieldGoal) {
+		this.oppFreePerFieldGoal = oppFreePerFieldGoal;
+	}
+
+	public String getArean() {
+		return arean;
+	}
+
+	public void setArean(String arean) {
+		this.arean = arean;
+	}
+
+	public double getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(double attendance) {
+		this.attendance = attendance;
 	}
 }

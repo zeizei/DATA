@@ -4,6 +4,7 @@ import html.MatchHtml;
 import html.MatchMapHtml;
 import html.PlayerHtml;
 import html.PlayerMapHtml;
+import html.SeasonHtml;
 import html.SeasonMapHtml;
 
 import java.util.ArrayList;
@@ -74,16 +75,18 @@ public class Task {
 
 	public void getTeam() {
 		String url = "http://www.basketball-reference.com/leagues";
-		SeasonMapHtml teamMapHtml = new SeasonMapHtml(url);
-		ArrayList<String> teamSeasonMapUrlList = teamMapHtml.getSeasonUrlList();
-		ArrayList<String> teamNameList = teamMapHtml.getSeasonList();
-		for (int i = 0; i < teamSeasonMapUrlList.size(); i++) {
-			System.out.println(teamSeasonMapUrlList.get(i));
+		SeasonMapHtml seasonMapHtml = new SeasonMapHtml(url);
+		ArrayList<String> seasonUrlList = seasonMapHtml.getSeasonUrlList();
+		ArrayList<String> seasonList = seasonMapHtml.getSeasonList();
+		for (int i = 0; i < seasonUrlList.size(); i++) {
+			SeasonHtml seasonHtml = new SeasonHtml(seasonUrlList.get(i), seasonList.get(i));
+			System.out.println(seasonUrlList.get(i));
+			HashMap<String, SeasonTeam> seasonTeamMap = seasonHtml.getSeasonTeamMap();
+			for (Entry<String, SeasonTeam> temp : seasonTeamMap.entrySet()) {
+				db.update(temp.getValue().getInsertTableStr());
+			}
 		}
-		for (int i = 0; i < teamNameList.size(); i++) {
-			System.out.println(teamNameList.get(i));
-		}
-	}
+	}// 得到球队常规赛的每个赛季比赛信息
 
 	public void createDB() {
 		DB db = DB.getInstance();

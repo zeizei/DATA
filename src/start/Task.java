@@ -2,6 +2,7 @@ package start;
 
 import html.MatchHtml;
 import html.MatchMapHtml;
+import html.PlayOffHtml;
 import html.PlayerHtml;
 import html.PlayerMapHtml;
 import html.SeasonHtml;
@@ -16,7 +17,6 @@ import beans.GamePlayer;
 import beans.GameTeam;
 import beans.GeneralMatch;
 import beans.GeneralPlayer;
-import beans.GeneralTeam;
 import beans.SeasonPlayer;
 import beans.SeasonTeam;
 
@@ -88,13 +88,17 @@ public class Task {
 		}
 	}// 得到球队常规赛的每个赛季比赛信息
 
+	public void getPlayOff() {
+		String urlString = "http://www.basketball-reference.com/playoffs";
+		PlayOffHtml playOffHtml = new PlayOffHtml(urlString);
+	}
+
 	public void createDB() {
 		DB db = DB.getInstance();
 		db.update(new GamePlayer().getCreateTableStr());
 		db.update(new GameTeam().getCreateTableStr());
 		db.update(new GeneralMatch().getCreateTableStr());
 		db.update(new GeneralPlayer().getCreateTableStr());
-		db.update(new GeneralTeam().getCreateTableStr());
 		db.update(new SeasonPlayer().getCreateTableStr());
 		db.update(new SeasonTeam().getCreateTableStr());
 	}// 建立数据库表格

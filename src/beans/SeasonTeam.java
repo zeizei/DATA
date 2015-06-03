@@ -8,6 +8,7 @@ public class SeasonTeam extends Bean {
 	// 主键
 	protected String teamName;
 	protected String season;
+	protected int isPlayOff;// 是否为季后赛
 	// 球队普通赛季数据
 	private double numOfGame;// 比赛场数
 	private double numOfWin;// 赢场数
@@ -82,6 +83,14 @@ public class SeasonTeam extends Bean {
 
 	public void setSeason(String season) {
 		this.season = season;
+	}
+
+	public int getIsPlayOff() {
+		return isPlayOff;
+	}
+
+	public void setIsPlayOff(int isPlayOff) {
+		this.isPlayOff = isPlayOff;
 	}
 
 	public double getNumOfGame() {

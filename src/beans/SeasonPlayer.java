@@ -9,6 +9,7 @@ public class SeasonPlayer extends Bean {
 	protected String playerName;// 球员名称
 	protected String season;// 赛季
 	protected String teamName;// 球队名称
+	protected int isPlayOff;// 是否为季后赛
 	// 求普通赛季数据
 	private double age;// 年龄
 	private String position;// 位置
@@ -28,8 +29,8 @@ public class SeasonPlayer extends Bean {
 	private double freeHit;// 罚球命中数
 	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private double dfdRebound;// 后场篮板
 	private double ofdRebound;// 前场篮板
+	private double dfdRebound;// 后场篮板
 	private double totRebound;// 总篮板
 	private double assist;// 助攻数
 	private double steal;// 抢断数
@@ -87,6 +88,14 @@ public class SeasonPlayer extends Bean {
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}
+
+	public int getIsPlayOff() {
+		return isPlayOff;
+	}
+
+	public void setIsPlayOff(int isPlayOff) {
+		this.isPlayOff = isPlayOff;
 	}
 
 	public double getAge() {
@@ -201,6 +210,14 @@ public class SeasonPlayer extends Bean {
 		this.two = two;
 	}
 
+	public double getShotEFF() {
+		return shotEFF;
+	}
+
+	public void setShotEFF(double shotEFF) {
+		this.shotEFF = shotEFF;
+	}
+
 	public double getFreeHit() {
 		return freeHit;
 	}
@@ -225,20 +242,20 @@ public class SeasonPlayer extends Bean {
 		this.free = free;
 	}
 
-	public double getDfdRebound() {
-		return dfdRebound;
-	}
-
-	public void setDfdRebound(double dfdRebound) {
-		this.dfdRebound = dfdRebound;
-	}
-
 	public double getOfdRebound() {
 		return ofdRebound;
 	}
 
 	public void setOfdRebound(double ofdRebound) {
 		this.ofdRebound = ofdRebound;
+	}
+
+	public double getDfdRebound() {
+		return dfdRebound;
+	}
+
+	public void setDfdRebound(double dfdRebound) {
+		this.dfdRebound = dfdRebound;
 	}
 
 	public double getTotRebound() {
@@ -311,14 +328,6 @@ public class SeasonPlayer extends Bean {
 
 	public void setRealShot(double realShot) {
 		this.realShot = realShot;
-	}
-
-	public double getShotEFF() {
-		return shotEFF;
-	}
-
-	public void setShotEFF(double shotEFF) {
-		this.shotEFF = shotEFF;
 	}
 
 	public double getThreeEFF() {
@@ -425,6 +434,14 @@ public class SeasonPlayer extends Bean {
 		this.winShare = winShare;
 	}
 
+	public double getWinSharePer48() {
+		return winSharePer48;
+	}
+
+	public void setWinSharePer48(double winSharePer48) {
+		this.winSharePer48 = winSharePer48;
+	}
+
 	public double getOffBoxPM() {
 		return offBoxPM;
 	}
@@ -455,13 +472,5 @@ public class SeasonPlayer extends Bean {
 
 	public void setReplaceValue(double replaceValue) {
 		this.replaceValue = replaceValue;
-	}
-
-	public double getWinSharePer48() {
-		return winSharePer48;
-	}
-
-	public void setWinSharePer48(double winSharePer48) {
-		this.winSharePer48 = winSharePer48;
 	}
 }

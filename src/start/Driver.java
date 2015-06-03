@@ -34,11 +34,11 @@ public class Driver {
 			System.out.println("-------------------------" + detailMatchUrlList.get(i) + "-------------------------------------------");
 			System.out.println("-------------------------" + generalMatchList.get(i) + "-----------------------------------------------");
 			MatchHtml match = new MatchHtml(detailMatchUrlList.get(i), generalMatchList.get(i));
-			HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerList();
+			HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerMap();
 			for (Entry<String, GamePlayer> temp : gamePlayerMap.entrySet()) {
 				System.out.println(temp.getValue().toString());
 			}
-			HashMap<String, GameTeam> gameTeamMap = match.getGameTeamList();
+			HashMap<String, GameTeam> gameTeamMap = match.getGameTeamMap();
 			for (Entry<String, GameTeam> temp : gameTeamMap.entrySet()) {
 				System.out.println(temp.getValue().toString());
 			}

@@ -6,6 +6,7 @@ public class Main {
 		Task task = new Task();
 		// task.createDB();
 		// task.getMatchs();
-		task.getPlayer();
+		// task.getPlayer();
+		task.getTeam();
 	}
 }

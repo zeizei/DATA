@@ -8,8 +8,8 @@ public class GamePlayer extends Bean {
 	// 主键
 	protected String date;// 比赛时间
 	protected String playerName;// 球员姓名
+	protected String teamName;// 球队名称
 	// 球员基础比赛信息
-	private String teamName;// 球队名称
 	private double isStart;// 是否首发
 	private double minute;// 比赛总时间
 	private double totHit;// 总命中

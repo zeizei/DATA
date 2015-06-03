@@ -289,11 +289,11 @@ public class MatchHtml extends HtmlReader {
 		}
 	}// 处理一个球队的比赛高级数据
 
-	public HashMap<String, GamePlayer> getGamePlayerList() {
+	public HashMap<String, GamePlayer> getGamePlayerMap() {
 		return gamePlayerMap;
 	}
 
-	public HashMap<String, GameTeam> getGameTeamList() {
+	public HashMap<String, GameTeam> getGameTeamMap() {
 		return gameTeamMap;
 	}
 }

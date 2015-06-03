@@ -30,7 +30,7 @@ public class Bean implements Serializable {
 		return null;
 	}
 
-	public String createTableStr() {
+	public String getCreateTableStr() {
 		Field[] fields = this.getClass().getDeclaredFields();
 		String primaryKey = "primary key (";
 		StringBuffer buffer = new StringBuffer();
@@ -65,7 +65,7 @@ public class Bean implements Serializable {
 		return null;
 	}
 
-	public String insertTableStr() {
+	public String getInsertTableStr() {
 		Field[] fields = this.getClass().getDeclaredFields();
 		StringBuffer value = new StringBuffer();
 		StringBuffer buffer = new StringBuffer();

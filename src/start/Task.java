@@ -4,7 +4,7 @@ import html.MatchHtml;
 import html.MatchMapHtml;
 import html.PlayerHtml;
 import html.PlayerMapHtml;
-import html.TeamMapHtml;
+import html.SeasonMapHtml;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class Task {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
-		for (int m = 2002; m >= 2002; m--) {
+		for (int m = 2001; m >= 2001; m--) {
 			urlString = before + String.valueOf(m) + after;
 			MatchMapHtml schedule = new MatchMapHtml(urlString);
 			ArrayList<GeneralMatch> generalMatchList = schedule.getGeneralMatchList();
@@ -73,13 +73,13 @@ public class Task {
 	}// 得到球员基本信息和每个赛季比赛信息
 
 	public void getTeam() {
-		String url = "http://www.basketball-reference.com/teams/";
-		TeamMapHtml teamMapHtml = new TeamMapHtml(url);
-		ArrayList<String> teamSeasonMapUrlList = teamMapHtml.getTeamSeasonMapUrlList();
+		String url = "http://www.basketball-reference.com/leagues";
+		SeasonMapHtml teamMapHtml = new SeasonMapHtml(url);
+		ArrayList<String> teamSeasonMapUrlList = teamMapHtml.getSeasonUrlList();
+		ArrayList<String> teamNameList = teamMapHtml.getSeasonList();
 		for (int i = 0; i < teamSeasonMapUrlList.size(); i++) {
 			System.out.println(teamSeasonMapUrlList.get(i));
 		}
-		ArrayList<String> teamNameList = teamMapHtml.getTeamNameList();
 		for (int i = 0; i < teamNameList.size(); i++) {
 			System.out.println(teamNameList.get(i));
 		}

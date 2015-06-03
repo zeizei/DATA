@@ -67,29 +67,32 @@ public class MatchMapHtml extends HtmlReader {
 	}
 
 	private void dealWithOneMatch(TableRow row, int isPlayOff) {
-		boolean isCorrect = false;
-		TableColumn[] columns = row.getColumns();
-		if (columns != null && columns.length == this.COLUMN_NUM) {
-			String date = this.getDate(columns[this.DATE].toPlainTextString());
-			String homeTeam = columns[this.HOME_TEAM].toPlainTextString();
-			String homePointStr = columns[this.HOME_TEAM_POINT].toPlainTextString();
-			int homePoint = this.toIntPoint(homePointStr);
-			String guestTeam = columns[this.GUEST_TEAM].toPlainTextString();
-			String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
-			int guestPoint = this.toIntPoint(guestPointStr);
-			if (homePoint != -1 && guestPoint != -1 && homeTeam != null && guestTeam != null && (homeTeam = homeTeam.trim()) != null && (guestTeam = guestTeam.trim()) != null) {
-				isCorrect = true;
-			}
-			if (isCorrect) {
-				GeneralMatch generalMatch = new GeneralMatch();
-				generalMatch.setDate(date);
-				generalMatch.setHomeTeam(homeTeam);
-				generalMatch.setHomePoint(homePoint);
-				generalMatch.setGuestTeam(guestTeam);
-				generalMatch.setGuestPoint(guestPoint);
-				generalMatch.setIsPlayOff(isPlayOff);
-				this.generalmatchList.add(generalMatch);
-				this.getOneDetailMatchUrl(columns[this.DETAIL_MATCH].getStringText());// 得到详细比赛信息链接
+
+		if (row != null) {
+			TableColumn[] columns = row.getColumns();
+			if (columns != null && columns.length == this.COLUMN_NUM) {
+				String date = this.getDate(columns[this.DATE].toPlainTextString());
+				String homeTeam = columns[this.HOME_TEAM].toPlainTextString();
+				String homePointStr = columns[this.HOME_TEAM_POINT].toPlainTextString();
+				int homePoint = this.toIntPoint(homePointStr);
+				String guestTeam = columns[this.GUEST_TEAM].toPlainTextString();
+				String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
+				int guestPoint = this.toIntPoint(guestPointStr);
+				boolean isCorrect = false;
+				if (homePoint != -1 && guestPoint != -1 && homeTeam != null && guestTeam != null && (homeTeam = homeTeam.trim()) != null && (guestTeam = guestTeam.trim()) != null) {
+					isCorrect = true;
+				}
+				if (isCorrect) {
+					GeneralMatch generalMatch = new GeneralMatch();
+					generalMatch.setDate(date);
+					generalMatch.setHomeTeam(homeTeam);
+					generalMatch.setHomePoint(homePoint);
+					generalMatch.setGuestTeam(guestTeam);
+					generalMatch.setGuestPoint(guestPoint);
+					generalMatch.setIsPlayOff(isPlayOff);
+					this.generalmatchList.add(generalMatch);
+					this.getOneDetailMatchUrl(columns[this.DETAIL_MATCH].getStringText());// 得到详细比赛信息链接
+				}
 			}
 		}
 	}// 处理一场比赛

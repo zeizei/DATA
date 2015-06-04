@@ -4,6 +4,7 @@ import html.MatchHtml;
 import html.MatchMapHtml;
 import html.PlayOffMapHtml;
 import html.PlayerHtml;
+import html.PlayerImageHtml;
 import html.PlayerMapHtml;
 import html.SeasonHtml;
 import html.SeasonMapHtml;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import database.DB;
 import beans.GamePlayer;
 import beans.GameTeam;
 import beans.GeneralMatch;
@@ -20,6 +20,7 @@ import beans.GeneralPlayer;
 import beans.PlayOffSeries;
 import beans.SeasonPlayer;
 import beans.SeasonTeam;
+import database.DB;
 
 public class Task {
 	private DB db = DB.getInstance();
@@ -96,6 +97,23 @@ public class Task {
 		ArrayList<PlayOffSeries> playOffSeriesList = playOffHtml.getPlayOffSeriesList();
 		for (int i = 0; i < playOffSeriesList.size(); i++) {
 			db.update(playOffSeriesList.get(i).getInsertTableStr());
+		}
+	}
+
+	public void getPlayerImage() {
+		String UrlString = "http://www.basketball-reference.com/players/a";
+		for (int k = 0; k < 26; k++) {
+			PlayerMapHtml playerMap = new PlayerMapHtml(UrlString);
+			ArrayList<GeneralPlayer> generalPlayerList = playerMap.getGeneralPlayerList();
+			ArrayList<String> detailPlayerUrlList = playerMap.getDetailPlayerUrlList();
+			for (int i = 0; i < detailPlayerUrlList.size(); i++) {
+				String htmlUrl = detailPlayerUrlList.get(i);
+				String playerName = generalPlayerList.get(i).getPlayerName();
+				PlayerImageHtml playerImage = new PlayerImageHtml(htmlUrl, playerName);
+				playerImage.getImagePNG();
+			}
+			String before = UrlString;
+			UrlString = before.substring(0, UrlString.length() - 1) + String.valueOf(((char) (before.charAt(before.length() - 1) + 1)));
 		}
 	}
 

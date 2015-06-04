@@ -2,7 +2,7 @@ package start;
 
 import html.MatchHtml;
 import html.MatchMapHtml;
-import html.PlayOffHtml;
+import html.PlayOffMapHtml;
 import html.PlayerHtml;
 import html.PlayerMapHtml;
 import html.SeasonHtml;
@@ -17,6 +17,7 @@ import beans.GamePlayer;
 import beans.GameTeam;
 import beans.GeneralMatch;
 import beans.GeneralPlayer;
+import beans.PlayOffSeries;
 import beans.SeasonPlayer;
 import beans.SeasonTeam;
 
@@ -27,7 +28,7 @@ public class Task {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
-		for (int m = 2001; m >= 2001; m--) {
+		for (int m = 2000; m >= 1986; m--) {
 			urlString = before + String.valueOf(m) + after;
 			MatchMapHtml schedule = new MatchMapHtml(urlString);
 			ArrayList<GeneralMatch> generalMatchList = schedule.getGeneralMatchList();
@@ -38,6 +39,7 @@ public class Task {
 				System.out.println("-------------------------" + generalMatchList.get(i) + "-----------------------------------------------");
 				MatchHtml match = new MatchHtml(detailMatchUrlList.get(i), generalMatchList.get(i));
 				HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerMap();
+				System.out.println(gamePlayerMap.isEmpty());
 				for (Entry<String, GamePlayer> temp : gamePlayerMap.entrySet()) {
 					db.update(temp.getValue().getInsertTableStr());
 				}
@@ -90,7 +92,11 @@ public class Task {
 
 	public void getPlayOff() {
 		String urlString = "http://www.basketball-reference.com/playoffs";
-		PlayOffHtml playOffHtml = new PlayOffHtml(urlString);
+		PlayOffMapHtml playOffHtml = new PlayOffMapHtml(urlString);
+		ArrayList<PlayOffSeries> playOffSeriesList = playOffHtml.getPlayOffSeriesList();
+		for (int i = 0; i < playOffSeriesList.size(); i++) {
+			db.update(playOffSeriesList.get(i).getInsertTableStr());
+		}
 	}
 
 	public void createDB() {
@@ -101,5 +107,6 @@ public class Task {
 		db.update(new GeneralPlayer().getCreateTableStr());
 		db.update(new SeasonPlayer().getCreateTableStr());
 		db.update(new SeasonTeam().getCreateTableStr());
+		db.update(new PlayOffSeries().getCreateTableStr());
 	}// 建立数据库表格
 }

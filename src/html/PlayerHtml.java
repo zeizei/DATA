@@ -104,10 +104,10 @@ public class PlayerHtml extends HtmlReader {
 				SeasonPlayer seasonPlayer = new SeasonPlayer();
 				String[] fields = { "playerName", "season", "teamName", "position", "isPlayOff", "age" };
 				Object[] contents = { playerName, season, teamName, position, isPlayOff, age };
-				boolean iGeneralSucceed = super.AutoEncapsulate(seasonPlayer, fields, contents);
+				boolean iGeneralSucceed = seasonPlayer.AutoEncapsulate(fields, contents);
 				String[] tableFields = { "numOfGame", "numOfStart", "minute", "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "shotEFF", "freeHit",
 						"freeShot", "free", "ofdRebound", "dfdRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
-				boolean isTableSucceed = super.AutoEncapsulate(seasonPlayer, tableFields, cell);
+				boolean isTableSucceed = seasonPlayer.AutoEncapsulate(tableFields, cell);
 				String key = season + teamName + String.valueOf(isPlayOff);
 				if (iGeneralSucceed && isTableSucceed) {
 					this.seasonPlayerMap.put(key, seasonPlayer);
@@ -136,7 +136,7 @@ public class PlayerHtml extends HtmlReader {
 				String[] tableFields = { "playerEFF", "realShot", "threeEFF", "freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF",
 						"offWinShare", "offWinShare", "defWinShare", "winShare", "winSharePer48", "offBoxPM", "offBoxPM", "defBoxPM", "BoxPM", "replaceValue" };
 				// 有重复是因为网页上有对应的列但却没有内容，为空列
-				boolean isTableSucceed = super.AutoEncapsulate(seasonPlayer, tableFields, cell);
+				boolean isTableSucceed = seasonPlayer.AutoEncapsulate(tableFields, cell);
 				if (!isTableSucceed) {
 					this.seasonPlayerMap.remove(key);
 				}

@@ -7,8 +7,8 @@ public class Main {
 		// task.createDB();
 		// task.getMatchs();
 		// task.getPlayer();
-		// task.getTeam();
+		task.getTeam();
 		// task.getPlayOff();
-		task.getPlayerImage();
+		// task.getPlayerImage();
 	}
 }

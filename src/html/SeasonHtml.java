@@ -101,7 +101,7 @@ public class SeasonHtml extends HtmlReader {
 							String tableField[] = { "avgAge", "numOfWin", "numOfLose", "pointOfWin", "strengthOfSchedule", "simpleRatingSystem", "offEFF", "defEFF", "pace", "freeEFF", "threeEFF",
 									"realShot", "shotEFF", "faultEFF", "offReboundEFF", "freePerFieldGoal", "oppShotEFF", "oppFaultEFF", "defReboundEFF", "oppFreePerFieldGoal" };
 
-							boolean isTableSucceed = super.AutoEncapsulate(seasonTeam, tableField, cell);
+							boolean isTableSucceed = seasonTeam.AutoEncapsulate(tableField, cell);
 							seasonTeam.setArean(cellString[this.ADVANCE_TABLE_COLUMN_NUM - 2]);
 							String attendance = cellString[this.ADVANCE_TABLE_COLUMN_NUM - 1];
 							String[] part = attendance.split(",");
@@ -145,7 +145,7 @@ public class SeasonHtml extends HtmlReader {
 							SeasonTeam seasonTeam = this.seasonTeamMap.get(teamName);
 							String tableField[] = { "oppTotalHit", "oppTotalShot", "oppShot", "oppThreeHit", "oppThreeShot", "oppThree", "oppTwoShot", "oppTwoHit", "oppTwo", "oppFreeHit",
 									"oppFreeShot", "oppFree", "oppOfdRebound", "oppDfdRebound", "oppTotRebound", "oppAssist", "oppSteal", "oppBlock", "oppFault", "oppFoul", "oppPoint" };
-							boolean isTableSucceed = super.AutoEncapsulate(seasonTeam, tableField, cell);
+							boolean isTableSucceed = seasonTeam.AutoEncapsulate(tableField, cell);
 							if (!isTableSucceed) {
 								this.seasonTeamMap.remove(teamName);
 							}
@@ -181,10 +181,10 @@ public class SeasonHtml extends HtmlReader {
 							SeasonTeam seasonTeam = new SeasonTeam();
 							String generalField[] = { "teamName", "season", "numOfGame", "minute" };
 							Object[] generalObject = { teamName, season, numOfGame, minute };
-							boolean isGeneralSucceed = super.AutoEncapsulate(seasonTeam, generalField, generalObject);
+							boolean isGeneralSucceed = seasonTeam.AutoEncapsulate(generalField, generalObject);
 							String tableField[] = { "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "freeHit", "freeShot", "free", "ofdRebound",
 									"dfdRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
-							boolean isTableSucceed = super.AutoEncapsulate(seasonTeam, tableField, cell);
+							boolean isTableSucceed = seasonTeam.AutoEncapsulate(tableField, cell);
 							if (isGeneralSucceed && isTableSucceed) {
 								this.seasonTeamMap.put(teamName, seasonTeam);
 							}

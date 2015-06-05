@@ -6,7 +6,7 @@ public class SeasonTeam extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String teamName;// 球员名称
+	protected String teamName;// 球队名称
 	protected String season;// 赛季
 	// 球队普通赛季数据
 	private double numOfGame;// 比赛场数

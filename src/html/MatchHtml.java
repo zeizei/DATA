@@ -161,10 +161,10 @@ public class MatchHtml extends HtmlReader {
 			String[] tableFields = { "minute", "totHit", "totShot", "shot", "threeHit", "threeShot", "three", "freeHit", "freeShot", "free", "offRebound", "defRebound", "totRebound", "assist",
 					"steal", "block", "fault", "foul", "point" };// //////////////2000之后还有一个"plus"
 			GamePlayer gamePlayer = new GamePlayer();
-			boolean isTableSucceed = super.AutoEncapsulate(gamePlayer, tableFields, cell);
+			boolean isTableSucceed = gamePlayer.AutoEncapsulate(tableFields, cell);
 			String[] generalFields = { "date", "playerName", "teamName", "isStart" };
 			Object[] contents = { this.date, playerName, teamName, isStart };
-			boolean isGeneralSucceed = super.AutoEncapsulate(gamePlayer, generalFields, contents);
+			boolean isGeneralSucceed = gamePlayer.AutoEncapsulate(generalFields, contents);
 			if (isTableSucceed && isGeneralSucceed) {
 				this.gamePlayerMap.put(playerName, gamePlayer);
 			}
@@ -202,12 +202,12 @@ public class MatchHtml extends HtmlReader {
 			String[] tableFields = { "minute", "totHit", "totShot", "shot", "threeHit", "threeShot", "three", "freeHit", "freeShot", "free", "offRebound", "defRebound", "totRebound", "assist",
 					"steal", "block", "fault", "foul", "point" };
 			GameTeam gameTeam = new GameTeam();
-			boolean isTableSucceed = super.AutoEncapsulate(gameTeam, tableFields, cell);
+			boolean isTableSucceed = gameTeam.AutoEncapsulate(tableFields, cell);
 			String[] generalFields = { "date", "teamName", "quarterPoint" };
 			String quarterPoint = this.getQuarterPoint(teamName);
 			if (quarterPoint != null) {
 				Object[] contents = { this.date, teamName, quarterPoint };
-				boolean isGeneralSucceed = super.AutoEncapsulate(gameTeam, generalFields, contents);
+				boolean isGeneralSucceed = gameTeam.AutoEncapsulate(generalFields, contents);
 				if (isTableSucceed && isGeneralSucceed) {
 					this.gameTeamMap.put(teamName, gameTeam);
 				}
@@ -260,7 +260,7 @@ public class MatchHtml extends HtmlReader {
 			}
 			if (this.gamePlayerMap.containsKey(playerName)) {
 				GamePlayer gamePlayer = this.gamePlayerMap.get(playerName);
-				boolean isSucceed = super.AutoEncapsulate(gamePlayer, this.advanceFields, cell);
+				boolean isSucceed = gamePlayer.AutoEncapsulate(this.advanceFields, cell);
 				if (!isSucceed) {
 					this.gamePlayerMap.remove(playerName);
 				}
@@ -281,7 +281,7 @@ public class MatchHtml extends HtmlReader {
 			}
 			if (this.gameTeamMap.containsKey(teamName)) {
 				GameTeam gameTeam = this.gameTeamMap.get(teamName);
-				boolean isSucceed = super.AutoEncapsulate(gameTeam, this.advanceFields, cell);
+				boolean isSucceed = gameTeam.AutoEncapsulate(this.advanceFields, cell);
 				if (!isSucceed) {
 					this.gameTeamMap.remove(gameTeam);
 				}

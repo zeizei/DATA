@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 public class Bean implements Serializable {
@@ -95,6 +97,78 @@ public class Bean implements Serializable {
 			value.deleteCharAt(value.capacity() - 1);
 			buffer.append(value.toString()).append(")");
 			return buffer.toString();
+		}
+		return null;
+	}
+
+	public boolean AutoEncapsulate(String[] fields, Object[] contents) {
+		boolean isSucceed = true;
+		if (fields != null && contents != null && fields.length == contents.length) {
+			Class<?> c = this.getClass();
+			for (int i = 0; i < fields.length; i++) {
+				StringBuffer buffer = new StringBuffer();
+				try {
+					Field field = c.getDeclaredField(fields[i]);
+					Class<?> MethodType = field.getType();
+					buffer.append("set");
+					buffer.append(fields[i].substring(0, 1).toUpperCase());
+					buffer.append(fields[i].substring(1));
+					Method method = c.getDeclaredMethod(buffer.toString(), MethodType);
+					method.invoke(this, contents[i]);
+				} catch (NoSuchFieldException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					isSucceed = false;
+					e.printStackTrace();
+				}
+			}
+		}
+		return isSucceed;
+	}
+
+	public Object[] getSpeContent(String[] fields) {
+		if (fields != null) {
+			Object[] objects = new Object[fields.length];
+			Class<?> c = this.getClass();
+			for (int i = 0; i < fields.length; i++) {
+				StringBuffer buffer = new StringBuffer();
+				try {
+					buffer.append("get");
+					buffer.append(fields[i].substring(0, 1).toUpperCase());
+					buffer.append(fields[i].substring(1));
+					Method method = c.getMethod(buffer.toString());
+					objects[i] = method.invoke(this);
+				} catch (SecurityException e) {
+					e.printStackTrace();
+					return null;
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+					return null;
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					return null;
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					return null;
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+			return objects;
 		}
 		return null;
 	}

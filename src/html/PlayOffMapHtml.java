@@ -69,7 +69,7 @@ public class PlayOffMapHtml extends HtmlReader {
 				String[] fields = { "year", "winTeam", "loseTeam", "league", "series", "startDate", "finishDate", "winTeamWin", "loseTeamWin" };
 				Object[] contents = { year, winTeam, loseTeam, league, series, startDate, finishDate, winTeamWin, loseTeamWin };
 				PlayOffSeries playOffSeries = new PlayOffSeries();
-				boolean isSucceed = super.AutoEncapsulate(playOffSeries, fields, contents);
+				boolean isSucceed = playOffSeries.AutoEncapsulate(fields, contents);
 				if (isSucceed) {
 					this.playOffSeriesList.add(playOffSeries);
 				}

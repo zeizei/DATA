@@ -74,7 +74,7 @@ public class PlayerMapHtml extends HtmlReader {
 					GeneralPlayer generalPlayer = new GeneralPlayer();
 					String[] fields = { "playerName", "startYear", "finishYear", "position", "height", "weight", "birthday", "collage" };
 					Object[] contents = { playerName, startYear, finishYear, position, height, weight, birthday, collage };
-					boolean isSucceed = super.AutoEncapsulate(generalPlayer, fields, contents);
+					boolean isSucceed = generalPlayer.AutoEncapsulate(fields, contents);
 					if (isSucceed) {
 						this.generalPlayerList.add(generalPlayer);
 					}

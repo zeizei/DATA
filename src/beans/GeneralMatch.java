@@ -6,13 +6,22 @@ public class GeneralMatch extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String date;// 比赛日期
-	protected String homeTeam;// 主场球队
+	protected String gameId;// 比赛编号
 	//
+	private String date;// 比赛日期
+	private String homeTeam;// 主场球队
 	private String guestTeam;// 客场球队
 	private int homePoint;// 主场球队得分
 	private int guestPoint;// 客场球队得分
-	private int isPlayOff;// 是否季后赛
+	private int isPlayOff;// 是否季后
+
+	public String getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
+	}
 
 	public String getDate() {
 		return date;

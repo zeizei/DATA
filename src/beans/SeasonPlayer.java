@@ -6,7 +6,7 @@ public class SeasonPlayer extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String playerId;// 球员信息页面的链接地址
+	protected String playerId;// 球员编号
 	protected String season;// 赛季
 	protected String teamName;// 球队名称
 	protected int isPlayOff;// 是否为季后赛

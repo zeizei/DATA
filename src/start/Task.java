@@ -29,7 +29,7 @@ public class Task {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
-		for (int m = 2000; m >= 1986; m--) {
+		for (int m = 2015; m >= 1950; m--) {
 			urlString = before + String.valueOf(m) + after;
 			MatchMapHtml schedule = new MatchMapHtml(urlString);
 			ArrayList<GeneralMatch> generalMatchList = schedule.getGeneralMatchList();
@@ -37,7 +37,7 @@ public class Task {
 			for (int i = 0; i < detailMatchUrlList.size(); i++) {
 				db.update(generalMatchList.get(i).getInsertTableStr());
 				System.out.println("-------------------------" + detailMatchUrlList.get(i) + "-------------------------------------------");
-				System.out.println("-------------------------" + generalMatchList.get(i) + "-----------------------------------------------");
+				System.out.println("------" + generalMatchList.get(i) + "-----------------------------------------------");
 				MatchHtml match = new MatchHtml(detailMatchUrlList.get(i), generalMatchList.get(i));
 				HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerMap();
 				for (Entry<String, GamePlayer> temp : gamePlayerMap.entrySet()) {

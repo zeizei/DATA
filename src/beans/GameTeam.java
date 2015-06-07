@@ -6,10 +6,10 @@ public class GameTeam extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String date;// 比赛日期
 	protected String teamName;// 球队名称
+	protected String date;// 比赛日期
 	// 球队普通比赛数据
-	private String quarterPoint;// 每节比赛得分（包括季后赛）
+	private String quarterPoint;// 每节比赛得分（包括加时赛）
 	private double minute;// 比赛总时间
 	private double totHit;// 总命中
 	private double totShot;// 总出手
@@ -46,20 +46,20 @@ public class GameTeam extends Bean {
 	private double offEFF;// 进攻效率
 	private double defEFF;// 防守效率
 
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public String getTeamName() {
 		return teamName;
 	}
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getQuarterPoint() {

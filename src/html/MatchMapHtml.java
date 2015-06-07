@@ -21,10 +21,10 @@ public class MatchMapHtml extends HtmlReader {
 	private final int COLUMN_NUM = 8;// 表的列数
 	private final int DATE = 0;// 比赛日期
 	private final int DETAIL_MATCH = 1;// 详细比赛信息链接
-	private final int HOME_TEAM = 2;// 主队链接
-	private final int HOME_TEAM_POINT = 3;// 主队得分
-	private final int GUEST_TEAM = 4;// 客队链接
-	private final int GUEST_TEAM_POINT = 5;// 客队得分
+	private final int HOME_TEAM = 4;// 主队链接
+	private final int HOME_TEAM_POINT = 5;// 主队得分
+	private final int GUEST_TEAM = 2;// 客队链接
+	private final int GUEST_TEAM_POINT = 3;// 客队得分
 
 	public MatchMapHtml(String urlString) {
 		super(urlString);
@@ -70,28 +70,30 @@ public class MatchMapHtml extends HtmlReader {
 		if (row != null) {
 			TableColumn[] columns = row.getColumns();
 			if (columns != null && columns.length == this.COLUMN_NUM) {
-				String date = this.getDate(columns[this.DATE].toPlainTextString());
-				String homeTeam = columns[this.HOME_TEAM].toPlainTextString();
-				String homePointStr = columns[this.HOME_TEAM_POINT].toPlainTextString();
-				int homePoint = this.toIntPoint(homePointStr);
-				String guestTeam = columns[this.GUEST_TEAM].toPlainTextString();
-				String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
-				int guestPoint = this.toIntPoint(guestPointStr);
-				boolean isCorrect = false;
-				if (homePoint != -1 && guestPoint != -1 && homeTeam != null && guestTeam != null && (homeTeam = homeTeam.trim()) != null && (guestTeam = guestTeam.trim()) != null) {
-					isCorrect = true;
+				String detailGameUrl = this.getOneDetailMatchUrl(columns[this.DETAIL_MATCH].getStringText());// 得到详细比赛信息链接
+				if (detailGameUrl != null && detailGameUrl.length() >= 47) {// http://www.basketball-reference.com/boxscores/201410280LAL.html
+					String gameId = detailGameUrl.substring(46, detailGameUrl.length() - 5);
+					String date = this.getDate(columns[this.DATE].toPlainTextString());
+					String homeTeam = columns[this.HOME_TEAM].toPlainTextString();
+					String homePointStr = columns[this.HOME_TEAM_POINT].toPlainTextString();
+					int homePoint = this.toIntPoint(homePointStr);
+					String guestTeam = columns[this.GUEST_TEAM].toPlainTextString();
+					String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
+					int guestPoint = this.toIntPoint(guestPointStr);
+					if (gameId != null) {
+						GeneralMatch generalMatch = new GeneralMatch();
+						generalMatch.setGameId(gameId);
+						generalMatch.setDate(date);
+						generalMatch.setHomeTeam(homeTeam);
+						generalMatch.setHomePoint(homePoint);
+						generalMatch.setGuestTeam(guestTeam);
+						generalMatch.setGuestPoint(guestPoint);
+						generalMatch.setIsPlayOff(isPlayOff);
+						this.generalmatchList.add(generalMatch);
+						this.detailMatchUrlList.add(detailGameUrl);
+					}
 				}
-				if (isCorrect) {
-					GeneralMatch generalMatch = new GeneralMatch();
-					generalMatch.setDate(date);
-					generalMatch.setHomeTeam(homeTeam);
-					generalMatch.setHomePoint(homePoint);
-					generalMatch.setGuestTeam(guestTeam);
-					generalMatch.setGuestPoint(guestPoint);
-					generalMatch.setIsPlayOff(isPlayOff);
-					this.generalmatchList.add(generalMatch);
-					this.getOneDetailMatchUrl(columns[this.DETAIL_MATCH].getStringText());// 得到详细比赛信息链接
-				}
+
 			}
 		}
 	}// 处理一场比赛
@@ -175,15 +177,16 @@ public class MatchMapHtml extends HtmlReader {
 		return null;
 	}// 得到比赛日期
 
-	private void getOneDetailMatchUrl(String text) {
+	private String getOneDetailMatchUrl(String text) {
 		if (text != null) {
 			String part[] = text.split("\"");
 			if (part != null && part.length == 3) {
 				String behindUrl = part[1];
 				String url = super.getHomeUrlString() + behindUrl;
-				this.detailMatchUrlList.add(url);
+				return url;
 			}
 		}
+		return null;
 	}// 得到一场比赛详细信息的链接
 
 	public ArrayList<GeneralMatch> getGeneralMatchList() {

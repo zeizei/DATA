@@ -24,7 +24,7 @@ public class MatchHtml extends HtmlReader {
 	private String homeTeam;
 	private String guestTeam;
 	private String date;
-	private final int NORMAL_TABLE_COLUMN_NUM = 20;// 普通数据表格列数/////2000之后为21////////////2000（包括）之前为20
+	private final int NORMAL_TABLE_COLUMN_NUM = 21;// 普通数据表格列数/////2000之后为21////////////2000（包括）之前为20
 	private final int ADVANCE_TABLE_COLUMN_NUM = 16;// 高级数据表格列数
 	private int QUARTER_POINT_TABLE;// 每节比赛得分表格
 	private int HOME_NORMAL_TABLE;// 主队普通数据
@@ -162,7 +162,7 @@ public class MatchHtml extends HtmlReader {
 				cell[i] = this.toDouble(cellString[i + 1]);
 			}
 			String[] tableFields = { "minute", "totHit", "totShot", "shot", "threeHit", "threeShot", "three", "freeHit", "freeShot", "free", "offRebound", "defRebound", "totRebound", "assist",
-					"steal", "block", "fault", "foul", "point" };// //////////////2000之后还有一个"plus"
+					"steal", "block", "fault", "foul", "point", "plus" };// //////////////2000之后还有一个"plus"
 			GamePlayer gamePlayer = new GamePlayer();
 			boolean isTableSucceed = gamePlayer.AutoEncapsulate(tableFields, cell);
 			String[] generalFields = { "playerId", "date", "teamName", "playerName", "isStart" };
@@ -193,13 +193,13 @@ public class MatchHtml extends HtmlReader {
 		if (tableRow != null && tableRow.getColumnCount() == this.NORMAL_TABLE_COLUMN_NUM) {
 			TableColumn[] columns = tableRow.getColumns();
 			String[] cellString = new String[this.NORMAL_TABLE_COLUMN_NUM];
-			Double[] cell = new Double[this.NORMAL_TABLE_COLUMN_NUM - 1];// 2000之后为-2,2000之前为-1
+			Double[] cell = new Double[this.NORMAL_TABLE_COLUMN_NUM - 2];// 2000之后为-2,2000之前为-1
 			for (int i = 0; i < this.NORMAL_TABLE_COLUMN_NUM; i++) {
 				cellString[i] = columns[i].toPlainTextString();
 			}
 			String minuteString = cellString[1];
 			cell[0] = this.getMinute(minuteString);
-			for (int i = 1; i < this.NORMAL_TABLE_COLUMN_NUM - 1; i++) {// 2000之后为-2,2000之前为-1
+			for (int i = 1; i < this.NORMAL_TABLE_COLUMN_NUM - 2; i++) {// 2000之后为-2,2000之前为-1
 				cell[i] = this.toDouble(cellString[i + 1]);
 			}
 			String[] tableFields = { "minute", "totHit", "totShot", "shot", "threeHit", "threeShot", "three", "freeHit", "freeShot", "free", "offRebound", "defRebound", "totRebound", "assist",

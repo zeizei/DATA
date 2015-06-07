@@ -13,9 +13,9 @@ import org.htmlparser.util.ParserException;
 
 import beans.GamePlayer;
 import beans.GameTeam;
-import beans.GeneralMatch;
+import beans.GeneralGame;
 
-public class MatchHtml extends HtmlReader {
+public class GameHtml extends HtmlReader {
 	private HashMap<String, GamePlayer> gamePlayerMap;
 	private HashMap<String, GameTeam> gameTeamMap;
 	private String[] advanceFields = { "realShot", "shotEFF", "threeEFF", "freeEFF", "offReboundEFF", "defReboundEFF", "totReboundEFF", "assistEFF", "stealEFF", "blockEFF", "faultEFF", "useEFF",
@@ -32,7 +32,7 @@ public class MatchHtml extends HtmlReader {
 	private int GUEST_NORMAL_TABLE;// 客队普通数据
 	private int GUEST_ADVANCE_TABLE;// 客队
 
-	public MatchHtml(String urlString, GeneralMatch generalMatch) {
+	public GameHtml(String urlString, GeneralGame generalMatch) {
 		super(urlString);
 		if (super.getIsSucceed()) {
 			if (generalMatch != null) {

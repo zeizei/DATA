@@ -11,26 +11,26 @@ import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import beans.GeneralMatch;
+import beans.GeneralGame;
 
-public class MatchMapHtml extends HtmlReader {
-	private ArrayList<GeneralMatch> generalmatchList;// 比赛简略信息链表
-	private ArrayList<String> detailMatchUrlList;// 比赛详细信息链接链表
+public class GameMapHtml extends HtmlReader {
+	private ArrayList<GeneralGame> generalGameList;// 比赛简略信息链表
+	private ArrayList<String> detailGameUrlList;// 比赛详细信息链接链表
 	private final int REGULAR_TABLE = 0;// 常规赛表格
 	private final int PLAYOFF_TABLE = 1;// 季后赛表格
 	private final int COLUMN_NUM = 8;// 表的列数
 	private final int DATE = 0;// 比赛日期
-	private final int DETAIL_MATCH = 1;// 详细比赛信息链接
+	private final int DETAIL_GAME = 1;// 详细比赛信息链接
 	private final int HOME_TEAM = 4;// 主队链接
 	private final int HOME_TEAM_POINT = 5;// 主队得分
 	private final int GUEST_TEAM = 2;// 客队链接
 	private final int GUEST_TEAM_POINT = 3;// 客队得分
 
-	public MatchMapHtml(String urlString) {
+	public GameMapHtml(String urlString) {
 		super(urlString);
 		if (super.getIsSucceed()) {
-			this.generalmatchList = new ArrayList<GeneralMatch>(2048);
-			this.detailMatchUrlList = new ArrayList<String>(2048);
+			this.generalGameList = new ArrayList<GeneralGame>(2048);
+			this.detailGameUrlList = new ArrayList<String>(2048);
 			this.readPage();
 		}
 	}
@@ -50,7 +50,7 @@ public class MatchMapHtml extends HtmlReader {
 				TableRow[] rows = tag.getRows();
 				if (rows != null) {
 					for (int i = 0; i < rows.length; i++) {
-						this.dealWithOneMatch(rows[i], 0);
+						this.dealWithOneGame(rows[i], 0);
 					}
 				}
 			}// 处理常规赛比赛
@@ -59,18 +59,18 @@ public class MatchMapHtml extends HtmlReader {
 				TableRow[] rows = tag.getRows();
 				if (rows != null) {
 					for (int i = 0; i < rows.length; i++) {
-						this.dealWithOneMatch(rows[i], 1);
+						this.dealWithOneGame(rows[i], 1);
 					}
 				}
 			}// 处理季后赛比赛
 		}
 	}
 
-	private void dealWithOneMatch(TableRow row, int isPlayOff) {
+	private void dealWithOneGame(TableRow row, int isPlayOff) {
 		if (row != null) {
 			TableColumn[] columns = row.getColumns();
 			if (columns != null && columns.length == this.COLUMN_NUM) {
-				String detailGameUrl = this.getOneDetailMatchUrl(columns[this.DETAIL_MATCH].getStringText());// 得到详细比赛信息链接
+				String detailGameUrl = this.getOneDetailGameUrl(columns[this.DETAIL_GAME].getStringText());// 得到详细比赛信息链接
 				if (detailGameUrl != null && detailGameUrl.length() >= 47) {// http://www.basketball-reference.com/boxscores/201410280LAL.html
 					String gameId = detailGameUrl.substring(46, detailGameUrl.length() - 5);
 					String date = this.getDate(columns[this.DATE].toPlainTextString());
@@ -81,19 +81,16 @@ public class MatchMapHtml extends HtmlReader {
 					String guestPointStr = columns[this.GUEST_TEAM_POINT].toPlainTextString();
 					int guestPoint = this.toIntPoint(guestPointStr);
 					if (gameId != null) {
-						GeneralMatch generalMatch = new GeneralMatch();
-						generalMatch.setGameId(gameId);
-						generalMatch.setDate(date);
-						generalMatch.setHomeTeam(homeTeam);
-						generalMatch.setHomePoint(homePoint);
-						generalMatch.setGuestTeam(guestTeam);
-						generalMatch.setGuestPoint(guestPoint);
-						generalMatch.setIsPlayOff(isPlayOff);
-						this.generalmatchList.add(generalMatch);
-						this.detailMatchUrlList.add(detailGameUrl);
+						GeneralGame generalGame = new GeneralGame();
+						String[] fields = new String[] { "gameId", "date", "homeTeam", "homePoint", "guestTeam", "guestPoint", "isPlayOff" };
+						Object[] contents = new Object[] { gameId, date, homeTeam, homePoint, guestTeam, guestPoint, isPlayOff };
+						boolean isSucceed = generalGame.AutoEncapsulate(fields, contents);
+						if (isSucceed) {
+							this.generalGameList.add(generalGame);
+							this.detailGameUrlList.add(detailGameUrl);
+						}
 					}
 				}
-
 			}
 		}
 	}// 处理一场比赛
@@ -177,7 +174,7 @@ public class MatchMapHtml extends HtmlReader {
 		return null;
 	}// 得到比赛日期
 
-	private String getOneDetailMatchUrl(String text) {
+	private String getOneDetailGameUrl(String text) {
 		if (text != null) {
 			String part[] = text.split("\"");
 			if (part != null && part.length == 3) {
@@ -189,11 +186,11 @@ public class MatchMapHtml extends HtmlReader {
 		return null;
 	}// 得到一场比赛详细信息的链接
 
-	public ArrayList<GeneralMatch> getGeneralMatchList() {
-		return generalmatchList;
+	public ArrayList<GeneralGame> getGeneralGameList() {
+		return generalGameList;
 	}// 得到一个赛季的比赛简略信息
 
-	public ArrayList<String> getDetailMatchUrlList() {
-		return detailMatchUrlList;
+	public ArrayList<String> getDetailGameUrlList() {
+		return detailGameUrlList;
 	}// 得到一个赛季所有比赛详细信息的链表
 }

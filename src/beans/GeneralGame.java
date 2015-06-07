@@ -1,6 +1,6 @@
 package beans;
 
-public class GeneralMatch extends Bean {
+public class GeneralGame extends Bean {
 	/**
 	 * 
 	 */

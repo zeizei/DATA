@@ -1,7 +1,7 @@
 package start;
 
-import html.MatchHtml;
-import html.MatchMapHtml;
+import html.GameHtml;
+import html.GameMapHtml;
 import html.PlayOffMapHtml;
 import html.PlayerHtml;
 import html.PlayerImageHtml;
@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 
 import beans.GamePlayer;
 import beans.GameTeam;
-import beans.GeneralMatch;
+import beans.GeneralGame;
 import beans.GeneralPlayer;
 import beans.PlayOffSeries;
 import beans.SeasonPlayer;
@@ -25,25 +25,25 @@ import database.DB;
 public class Task {
 	private DB db = DB.getInstance();
 
-	public void getMatchs() {
+	public void getGames() {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
 		for (int m = 2015; m >= 1950; m--) {
 			urlString = before + String.valueOf(m) + after;
-			MatchMapHtml schedule = new MatchMapHtml(urlString);
-			ArrayList<GeneralMatch> generalMatchList = schedule.getGeneralMatchList();
-			ArrayList<String> detailMatchUrlList = schedule.getDetailMatchUrlList();
-			for (int i = 0; i < detailMatchUrlList.size(); i++) {
-				db.update(generalMatchList.get(i).getInsertTableStr());
-				System.out.println("-------------------------" + detailMatchUrlList.get(i) + "-------------------------------------------");
-				System.out.println("------" + generalMatchList.get(i) + "-----------------------------------------------");
-				MatchHtml match = new MatchHtml(detailMatchUrlList.get(i), generalMatchList.get(i));
-				HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerMap();
+			GameMapHtml schedule = new GameMapHtml(urlString);
+			ArrayList<GeneralGame> generalGameList = schedule.getGeneralGameList();
+			ArrayList<String> detailGameUrlList = schedule.getDetailGameUrlList();
+			for (int i = 0; i < detailGameUrlList.size(); i++) {
+				db.update(generalGameList.get(i).getInsertTableStr());
+				System.out.println("-------------------------" + detailGameUrlList.get(i) + "-------------------------------------------");
+				System.out.println("------" + generalGameList.get(i) + "-----------------------------------------------");
+				GameHtml gameHtml = new GameHtml(detailGameUrlList.get(i), generalGameList.get(i));
+				HashMap<String, GamePlayer> gamePlayerMap = gameHtml.getGamePlayerMap();
 				for (Entry<String, GamePlayer> temp : gamePlayerMap.entrySet()) {
 					db.update(temp.getValue().getInsertTableStr());
 				}
-				HashMap<String, GameTeam> gameTeamMap = match.getGameTeamMap();
+				HashMap<String, GameTeam> gameTeamMap = gameHtml.getGameTeamMap();
 				for (Entry<String, GameTeam> temp : gameTeamMap.entrySet()) {
 					db.update(temp.getValue().getInsertTableStr());
 				}
@@ -118,7 +118,7 @@ public class Task {
 		DB db = DB.getInstance();
 		db.update(new GamePlayer().getCreateTableStr());
 		db.update(new GameTeam().getCreateTableStr());
-		db.update(new GeneralMatch().getCreateTableStr());
+		db.update(new GeneralGame().getCreateTableStr());
 		db.update(new GeneralPlayer().getCreateTableStr());
 		db.update(new SeasonPlayer().getCreateTableStr());
 		db.update(new SeasonTeam().getCreateTableStr());

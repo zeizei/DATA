@@ -5,10 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.JOptionPane;
-
-import start.ResultMessage;
 
 public class DB {
 	private String dbDriver = "com.mysql.jdbc.Driver";
@@ -54,14 +51,12 @@ public class DB {
 		return conn;
 	} // 连接数据库
 
-	public ResultMessage update(String sql) {
+	public void update(String sql) {
 		try {
 			this.statement.executeUpdate(sql);
-			return ResultMessage.SUCCEED;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "数据库连接失败!请重新启动服务器", "错误", JOptionPane.ERROR_MESSAGE);
-			return ResultMessage.DB_FAULT;
 		}
 	}// 更新表格
 

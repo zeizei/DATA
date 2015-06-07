@@ -67,7 +67,6 @@ public class MatchMapHtml extends HtmlReader {
 	}
 
 	private void dealWithOneMatch(TableRow row, int isPlayOff) {
-
 		if (row != null) {
 			TableColumn[] columns = row.getColumns();
 			if (columns != null && columns.length == this.COLUMN_NUM) {

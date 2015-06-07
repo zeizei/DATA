@@ -10,17 +10,17 @@ import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import beans.SeasonPlayer;
 
 public class PlayerHtml extends HtmlReader {
+	private String playerUrl;
 	private String playerName;
-	private NodeList nodeList;
+	private Document doc;
 	private HashMap<String, SeasonPlayer> seasonPlayerMap;
-	private final int REGULAR_NORMAL_TABLE = 0;
-	private final int REGULAR_ADVANCE_TABLE = 4;
-	private final int PLAYOFF_NORMAL_TABLE = 5;
-	private final int PLAYOFF_ADVANCE_TABLE = 9;
 	private final int NORMAL_TABLE_COLUMN_NUM = 30;
 	private final int ADVANCE_TABLE_COLUMN_NUM = 29;
 
@@ -28,37 +28,49 @@ public class PlayerHtml extends HtmlReader {
 		super(urlString);
 		if (super.getIsSucceed()) {
 			if (playerName != null) {
+				this.playerUrl = urlString;
 				this.playerName = playerName;
 				seasonPlayerMap = new HashMap<String, SeasonPlayer>();
+				doc = Jsoup.parse(super.getHtmlString(), super.getHomeUrlString());
 				this.readPage();
 			}
 		}
 	}
 
 	private void readPage() {
-		Parser parser = Parser.createParser(super.getHtmlString(), super.getCodeSet());
-		NodeFilter tableFilter = new NodeClassFilter(TableTag.class);
-		this.nodeList = null;
-		try {
-			nodeList = parser.extractAllNodesThatMatch(tableFilter);// 找到网页中的table
-		} catch (ParserException e) {
-			e.printStackTrace();
-		}
-		if (this.nodeList != null) {
-			this.readNormalTable(this.REGULAR_NORMAL_TABLE);
-			this.readNormalTable(this.PLAYOFF_NORMAL_TABLE);
-			this.readAdvanceTable(this.REGULAR_ADVANCE_TABLE);
-			this.readAdvanceTable(this.PLAYOFF_ADVANCE_TABLE);
-		}
+		TableTag totalTable = this.getTableTagById("div_totals");
+		TableTag advancedTable = this.getTableTagById("div_advanced");
+		TableTag playOfftotalTable = this.getTableTagById("div_playoffs_totals");
+		TableTag playOffAdvancedTable = this.getTableTagById("div_playoffs_advanced");
+		this.readNormalTable(totalTable, 0);
+		this.readNormalTable(playOfftotalTable, 1);
+		this.readAdvanceTable(advancedTable, 0);
+		this.readAdvanceTable(playOffAdvancedTable, 1);
 	}
 
-	private void readNormalTable(int norTable) {
-		int isPlayOff = 0;
-		if (norTable == this.PLAYOFF_NORMAL_TABLE) {
-			isPlayOff = 1;
+	private TableTag getTableTagById(String id) {
+		Element totals = doc.getElementById(id);
+		if (totals != null) {
+			Parser parser = Parser.createParser(totals.html(), super.getCodeSet());
+			NodeFilter tableFilter = new NodeClassFilter(TableTag.class);
+			NodeList nodeList = null;
+			try {
+				nodeList = parser.extractAllNodesThatMatch(tableFilter);// 找到网页中的table
+			} catch (ParserException e) {
+				e.printStackTrace();
+			}
+			if (nodeList != null) {
+				if (nodeList.elementAt(0) instanceof TableTag) {
+					TableTag tableTag = (TableTag) nodeList.elementAt(0);
+					return tableTag;
+				}
+			}
 		}
-		if (nodeList.elementAt(norTable) instanceof TableTag) {
-			TableTag tag = (TableTag) nodeList.elementAt(norTable);
+		return null;
+	}// 根据相应的div的id得到对应的表格
+
+	private void readNormalTable(TableTag tag, int isPlayOff) {
+		if (tag != null) {
 			TableRow[] rows = tag.getRows();
 			if (rows != null) {
 				for (int i = 0; i < rows.length; i++) {
@@ -68,13 +80,8 @@ public class PlayerHtml extends HtmlReader {
 		}
 	}// 读取普通数据表格
 
-	private void readAdvanceTable(int advTable) {
-		int isPlayOff = 0;
-		if (advTable == this.PLAYOFF_ADVANCE_TABLE) {
-			isPlayOff = 1;
-		}
-		if (nodeList.elementAt(advTable) instanceof TableTag) {
-			TableTag tag = (TableTag) nodeList.elementAt(advTable);
+	private void readAdvanceTable(TableTag tag, int isPlayOff) {
+		if (tag != null) {
 			TableRow[] rows = tag.getRows();
 			if (rows != null) {
 				for (int i = 0; i < rows.length; i++) {
@@ -88,7 +95,7 @@ public class PlayerHtml extends HtmlReader {
 		if (row != null && row.getColumnCount() == this.NORMAL_TABLE_COLUMN_NUM) {
 			TableColumn[] columns = row.getColumns();
 			String str = columns[0].toPlainTextString();
-			if (str != null && str.length() >= 7 && str.charAt(4) == '-') {
+			if ((str != null && str.length() >= 7 && str.charAt(4) == '-') || (str != null) && str.equals("Career")) {
 				String[] cellString = new String[this.NORMAL_TABLE_COLUMN_NUM];
 				Double[] cell = new Double[this.NORMAL_TABLE_COLUMN_NUM - 5];
 				for (int i = 0; i < this.NORMAL_TABLE_COLUMN_NUM; i++) {
@@ -97,13 +104,17 @@ public class PlayerHtml extends HtmlReader {
 				for (int i = 0; i < this.NORMAL_TABLE_COLUMN_NUM - 5; i++) {
 					cell[i] = super.toDouble(cellString[i + 5]);
 				}
-				String season = cellString[0].substring(0, 7);
+				String season = "Career";
+				if (cellString[0].length() >= 7) {
+					season = cellString[0].substring(0, 7);
+				}
+				String playerId = this.playerUrl.substring(46, this.playerUrl.length() - 5);
 				double age = super.toDouble(cellString[1]);
 				String teamName = cellString[2];
 				String position = cellString[4];
 				SeasonPlayer seasonPlayer = new SeasonPlayer();
-				String[] fields = { "playerName", "season", "teamName", "position", "isPlayOff", "age" };
-				Object[] contents = { playerName, season, teamName, position, isPlayOff, age };
+				String[] fields = { "playerId", "season", "teamName", "playerName", "position", "isPlayOff", "age" };
+				Object[] contents = { playerId, season, teamName, playerName, position, isPlayOff, age };
 				boolean iGeneralSucceed = seasonPlayer.AutoEncapsulate(fields, contents);
 				String[] tableFields = { "numOfGame", "numOfStart", "minute", "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "shotEFF", "freeHit",
 						"freeShot", "free", "ofdRebound", "dfdRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
@@ -120,7 +131,7 @@ public class PlayerHtml extends HtmlReader {
 		if (row != null && row.getColumnCount() == this.ADVANCE_TABLE_COLUMN_NUM) {
 			TableColumn[] columns = row.getColumns();
 			String str = columns[0].toPlainTextString();
-			if (str != null && str.length() >= 7 && str.charAt(4) == '-') {
+			if ((str != null && str.length() >= 7 && str.charAt(4) == '-') || (str != null) && str.equals("Career")) {
 				String[] cellString = new String[this.ADVANCE_TABLE_COLUMN_NUM];
 				Double[] cell = new Double[this.ADVANCE_TABLE_COLUMN_NUM - 7];
 				for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM; i++) {
@@ -129,7 +140,10 @@ public class PlayerHtml extends HtmlReader {
 				for (int i = 0; i < this.ADVANCE_TABLE_COLUMN_NUM - 7; i++) {
 					cell[i] = super.toDouble(cellString[i + 7]);
 				}
-				String season = cellString[0].substring(0, 7);
+				String season = "Career";
+				if (cellString[0].length() >= 7) {
+					season = cellString[0].substring(0, 7);
+				}
 				String teamName = cellString[2];
 				String key = season + teamName + String.valueOf(isPlayOff);
 				SeasonPlayer seasonPlayer = this.seasonPlayerMap.get(key);

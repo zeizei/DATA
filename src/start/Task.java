@@ -40,7 +40,6 @@ public class Task {
 				System.out.println("-------------------------" + generalMatchList.get(i) + "-----------------------------------------------");
 				MatchHtml match = new MatchHtml(detailMatchUrlList.get(i), generalMatchList.get(i));
 				HashMap<String, GamePlayer> gamePlayerMap = match.getGamePlayerMap();
-				System.out.println(gamePlayerMap.isEmpty());
 				for (Entry<String, GamePlayer> temp : gamePlayerMap.entrySet()) {
 					db.update(temp.getValue().getInsertTableStr());
 				}
@@ -59,12 +58,10 @@ public class Task {
 			ArrayList<GeneralPlayer> generalPlayerList = playerMap.getGeneralPlayerList();
 			for (int i = 0; i < generalPlayerList.size(); i++) {
 				db.update(generalPlayerList.get(i).getInsertTableStr());
-				System.out.println(generalPlayerList.get(i).toString());
 			}
 			ArrayList<String> detailPlayerUrlList = playerMap.getDetailPlayerUrlList();
 			for (int i = 0; i < detailPlayerUrlList.size(); i++) {
 				System.out.println(detailPlayerUrlList.get(i));
-				System.out.println(generalPlayerList.get(i).getPlayerName());
 				PlayerHtml playerHtml = new PlayerHtml(detailPlayerUrlList.get(i), generalPlayerList.get(i).getPlayerName());
 				HashMap<String, SeasonPlayer> playerSeasonMap = playerHtml.getSeasonPlayerList();
 				for (Entry<String, SeasonPlayer> temp : playerSeasonMap.entrySet()) {

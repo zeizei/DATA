@@ -6,10 +6,11 @@ public class GamePlayer extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
+	protected String playerId;// 该球员编号
 	protected String date;// 比赛时间
-	protected String playerName;// 球员姓名
 	protected String teamName;// 球队名称
 	// 球员基础比赛信息
+	private String playerName;// 球员姓名
 	private double isStart;// 是否首发
 	private double minute;// 比赛总时间
 	private double totHit;// 总命中
@@ -46,6 +47,14 @@ public class GamePlayer extends Bean {
 	private double useEFF;// 使用率
 	private double offEFF;// 进攻效率
 	private double defEFF;// 防守效率
+
+	public String getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
+	}
 
 	public String getDate() {
 		return date;

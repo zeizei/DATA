@@ -6,11 +6,12 @@ public class SeasonPlayer extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键
-	protected String playerName;// 球员名称
+	protected String playerId;// 球员信息页面的链接地址
 	protected String season;// 赛季
 	protected String teamName;// 球队名称
 	protected int isPlayOff;// 是否为季后赛
 	// 求普通赛季数据
+	private String playerName;// 球员名称
 	private double age;// 年龄
 	private String position;// 位置
 	private double numOfGame;// 参赛场数
@@ -29,8 +30,8 @@ public class SeasonPlayer extends Bean {
 	private double freeHit;// 罚球命中数
 	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private double ofdRebound;// 前场篮板
-	private double dfdRebound;// 后场篮板
+	private double offRebound;// 前场篮板
+	private double defRebound;// 后场篮板
 	private double totRebound;// 总篮板
 	private double assist;// 助攻数
 	private double steal;// 抢断数
@@ -60,18 +61,12 @@ public class SeasonPlayer extends Bean {
 	private double BoxPM;// 贡献值
 	private double replaceValue;// 替换价值
 
-	public String getPlayerName() {
-		if (this.playerName.contains("'")) {
-			this.playerName = this.playerName.replace('\'', '-');
-		}
-		return playerName;
+	public String getPlayerId() {
+		return playerId;
 	}
 
-	public void setPlayerName(String playerName) {
-		if (playerName.contains("'")) {
-			playerName = playerName.replace('\'', '-');
-		}
-		this.playerName = playerName;
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
 	}
 
 	public String getSeason() {
@@ -96,6 +91,20 @@ public class SeasonPlayer extends Bean {
 
 	public void setIsPlayOff(int isPlayOff) {
 		this.isPlayOff = isPlayOff;
+	}
+
+	public String getPlayerName() {
+		if (this.playerName.contains("'")) {
+			this.playerName = this.playerName.replace('\'', '-');
+		}
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		if (playerName.contains("'")) {
+			playerName = playerName.replace('\'', '-');
+		}
+		this.playerName = playerName;
 	}
 
 	public double getAge() {
@@ -242,20 +251,20 @@ public class SeasonPlayer extends Bean {
 		this.free = free;
 	}
 
-	public double getOfdRebound() {
-		return ofdRebound;
+	public double getOffRebound() {
+		return offRebound;
 	}
 
-	public void setOfdRebound(double ofdRebound) {
-		this.ofdRebound = ofdRebound;
+	public void setOffRebound(double offRebound) {
+		this.offRebound = offRebound;
 	}
 
-	public double getDfdRebound() {
-		return dfdRebound;
+	public double getDefRebound() {
+		return defRebound;
 	}
 
-	public void setDfdRebound(double dfdRebound) {
-		this.dfdRebound = dfdRebound;
+	public void setDefRebound(double defRebound) {
+		this.defRebound = defRebound;
 	}
 
 	public double getTotRebound() {
@@ -473,4 +482,5 @@ public class SeasonPlayer extends Bean {
 	public void setReplaceValue(double replaceValue) {
 		this.replaceValue = replaceValue;
 	}
+
 }

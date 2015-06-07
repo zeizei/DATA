@@ -6,14 +6,24 @@ public class GeneralPlayer extends Bean {
 	 */
 	private static final long serialVersionUID = 1L;
 	// 主键 playerName,birthday
-	protected String playerName;
+	protected String playerId;// 球员页面的链接地址
+	//
+	private String playerName;
 	private int startYear;
 	private int finishYear;
 	private String position;
 	private String height;
 	private String weight;
-	protected String birthday;
+	private String birthday;
 	private String collage;
+
+	public String getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
+	}
 
 	public String getPlayerName() {
 		if (this.playerName.contains("'")) {

@@ -24,8 +24,8 @@ public class SeasonTeam extends Bean {
 	private double freeHit;// 罚球命中数
 	private double freeShot;// 罚球出手数
 	private double free;// 罚球命中率
-	private double ofdRebound;// 前场篮板
-	private double dfdRebound;// 后场篮板
+	private double offRebound;// 前场篮板
+	private double defRebound;// 后场篮板
 	private double totRebound;// 总篮板
 	private double assist;// 助攻数
 	private double steal;// 抢断数
@@ -207,20 +207,20 @@ public class SeasonTeam extends Bean {
 		this.free = free;
 	}
 
-	public double getOfdRebound() {
-		return ofdRebound;
+	public double getOffRebound() {
+		return offRebound;
 	}
 
-	public void setOfdRebound(double ofdRebound) {
-		this.ofdRebound = ofdRebound;
+	public void setOffRebound(double offRebound) {
+		this.offRebound = offRebound;
 	}
 
-	public double getDfdRebound() {
-		return dfdRebound;
+	public double getDefRebound() {
+		return defRebound;
 	}
 
-	public void setDfdRebound(double dfdRebound) {
-		this.dfdRebound = dfdRebound;
+	public void setDefRebound(double defRebound) {
+		this.defRebound = defRebound;
 	}
 
 	public double getTotRebound() {

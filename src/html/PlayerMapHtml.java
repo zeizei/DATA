@@ -63,6 +63,8 @@ public class PlayerMapHtml extends HtmlReader {
 			TableColumn[] columns = row.getColumns();
 			if (columns != null && columns.length == this.PLAYER_TABLE_COLUMN_NUM) {
 				String playerName = this.getPlayerNameAndFillUrl(columns[this.PLAYER_NAME].getStringText());
+				String playerId = this.detailPlayerUrlList.get(detailPlayerUrlList.size() - 1);
+				playerId = playerId.substring(46, playerId.length() - 5);
 				int startYear = super.toInt(columns[this.START_YEAR].toPlainTextString());
 				int finishYear = super.toInt(columns[this.FINISH_YEAR].toPlainTextString());
 				String position = columns[this.POSITION].toPlainTextString();
@@ -72,8 +74,8 @@ public class PlayerMapHtml extends HtmlReader {
 				String collage = columns[this.COLLEGE].toPlainTextString();
 				if (playerName != null) {
 					GeneralPlayer generalPlayer = new GeneralPlayer();
-					String[] fields = { "playerName", "startYear", "finishYear", "position", "height", "weight", "birthday", "collage" };
-					Object[] contents = { playerName, startYear, finishYear, position, height, weight, birthday, collage };
+					String[] fields = { "playerId", "playerName", "startYear", "finishYear", "position", "height", "weight", "birthday", "collage" };
+					Object[] contents = { playerId, playerName, startYear, finishYear, position, height, weight, birthday, collage };
 					boolean isSucceed = generalPlayer.AutoEncapsulate(fields, contents);
 					if (isSucceed) {
 						this.generalPlayerList.add(generalPlayer);
@@ -173,6 +175,5 @@ public class PlayerMapHtml extends HtmlReader {
 
 	public ArrayList<String> getDetailPlayerUrlList() {
 		return this.detailPlayerUrlList;
-
 	}
 }

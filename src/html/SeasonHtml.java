@@ -144,7 +144,7 @@ public class SeasonHtml extends HtmlReader {
 						if (teamName != null && this.season != null) {
 							SeasonTeam seasonTeam = this.seasonTeamMap.get(teamName);
 							String tableField[] = { "oppTotalHit", "oppTotalShot", "oppShot", "oppThreeHit", "oppThreeShot", "oppThree", "oppTwoShot", "oppTwoHit", "oppTwo", "oppFreeHit",
-									"oppFreeShot", "oppFree", "oppOfdRebound", "oppDfdRebound", "oppTotRebound", "oppAssist", "oppSteal", "oppBlock", "oppFault", "oppFoul", "oppPoint" };
+									"oppFreeShot", "oppFree", "oppOffRebound", "oppDefRebound", "oppTotRebound", "oppAssist", "oppSteal", "oppBlock", "oppFault", "oppFoul", "oppPoint" };
 							boolean isTableSucceed = seasonTeam.AutoEncapsulate(tableField, cell);
 							if (!isTableSucceed) {
 								this.seasonTeamMap.remove(teamName);
@@ -182,8 +182,8 @@ public class SeasonHtml extends HtmlReader {
 							String generalField[] = { "teamName", "season", "numOfGame", "minute" };
 							Object[] generalObject = { teamName, season, numOfGame, minute };
 							boolean isGeneralSucceed = seasonTeam.AutoEncapsulate(generalField, generalObject);
-							String tableField[] = { "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "freeHit", "freeShot", "free", "ofdRebound",
-									"dfdRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
+							String tableField[] = { "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "freeHit", "freeShot", "free", "offRebound",
+									"defRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
 							boolean isTableSucceed = seasonTeam.AutoEncapsulate(tableField, cell);
 							if (isGeneralSucceed && isTableSucceed) {
 								this.seasonTeamMap.put(teamName, seasonTeam);

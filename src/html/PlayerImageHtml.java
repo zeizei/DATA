@@ -13,15 +13,19 @@ import org.jsoup.select.Elements;
 
 public class PlayerImageHtml {
 	private String htmlUrl;
-	private String playerName;
+	private String playerId;
 
-	public PlayerImageHtml(String htmlUrl, String playerName) {
+	public PlayerImageHtml(String htmlUrl) {
 		this.htmlUrl = htmlUrl;
-		this.playerName = playerName;
-		System.out.println(playerName);
+		this.playerId = this.getPlayerId(htmlUrl);
 	}
 
-	public void getImageJPG() {
+	private String getPlayerId(String htmlUrl) {
+		String playerId = htmlUrl.substring(46, htmlUrl.length() - 5);
+		return playerId;
+	}
+
+	public boolean getImageJPG() {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(htmlUrl).get();
@@ -40,7 +44,7 @@ public class PlayerImageHtml {
 						try {
 							URL url = new URL(imgUrl);// 打开网络输入流
 							DataInputStream dis = new DataInputStream(url.openStream());
-							String newImageName = "D:/SE3/image_jpg/" + playerName + ".jpg";// 建立一个新的文件
+							String newImageName = "D:/SE3/images/" + playerId + ".png";// 建立一个新的文件
 							FileOutputStream fos = new FileOutputStream(new File(newImageName));
 							byte[] buffer = new byte[1024];
 							int length;// 开始填充数据
@@ -49,6 +53,7 @@ public class PlayerImageHtml {
 							}
 							dis.close();
 							fos.close();
+							return true;
 						} catch (MalformedURLException e) {
 							e.printStackTrace();
 						} catch (IOException e) {
@@ -58,6 +63,7 @@ public class PlayerImageHtml {
 				}
 			}
 		}
+		return false;
 	}
 
 	public void getImagePNG() {
@@ -81,7 +87,7 @@ public class PlayerImageHtml {
 							try {
 								URL url = new URL(imgUrl);// 打开网络输入流
 								DataInputStream dis = new DataInputStream(url.openStream());
-								String newImageName = "D:/SE3/image_png/" + playerName + ".png";// 建立一个新的文件
+								String newImageName = "D:/SE3/images/" + playerId + ".png";// 建立一个新的文件
 								FileOutputStream fos = new FileOutputStream(new File(newImageName));
 								byte[] buffer = new byte[1024];
 								int length;// 开始填充数据

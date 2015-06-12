@@ -108,6 +108,9 @@ public class PlayOffMapHtml extends HtmlReader {
 			String part[] = str.split(" ");
 			if (part != null && part.length == 2) {
 				String day = part[1].trim();
+				if (day != null && day.length() == 1) {
+					day = "0" + day;
+				}
 				String month = part[0].trim();
 				switch (month) {
 				case "Jan":

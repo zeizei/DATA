@@ -35,12 +35,12 @@ public class Task {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
-		for (int m = 2015; m >= 1950; m--) {
+		for (int m = 2015; m >= 2015; m--) {
 			urlString = before + String.valueOf(m) + after;
 			GameMapHtml schedule = new GameMapHtml(urlString);
 			ArrayList<GeneralGame> generalGameList = schedule.getGeneralGameList();
 			ArrayList<String> detailGameUrlList = schedule.getDetailGameUrlList();
-			for (int i = 0; i < detailGameUrlList.size(); i++) {
+			for (int i = detailGameUrlList.size() - 1; i < detailGameUrlList.size(); i++) {
 				db.update(generalGameList.get(i).getInsertTableStr());
 				System.out.println("-------------------------" + detailGameUrlList.get(i) + "-------------------------------------------");
 				System.out.println("------" + generalGameList.get(i) + "-----------------------------------------------");

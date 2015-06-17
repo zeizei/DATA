@@ -46,8 +46,8 @@ public class SeasonTeam extends Bean {
 	private double oppFreeHit;// 罚球命中数
 	private double oppFreeShot;// 罚球出手数
 	private double oppFree;// 罚球命中率
-	private double oppOfdRebound;// 前场篮板
-	private double oppDfdRebound;// 后场篮板
+	private double oppOffRebound;// 前场篮板
+	private double oppDefRebound;// 后场篮板
 	private double oppTotRebound;// 总篮板
 	private double oppAssist;// 助攻数
 	private double oppSteal;// 抢断数
@@ -375,20 +375,20 @@ public class SeasonTeam extends Bean {
 		this.oppFree = oppFree;
 	}
 
-	public double getOppOfdRebound() {
-		return oppOfdRebound;
+	public double getOppOffRebound() {
+		return oppOffRebound;
 	}
 
-	public void setOppOfdRebound(double oppOfdRebound) {
-		this.oppOfdRebound = oppOfdRebound;
+	public void setOppOffRebound(double oppOffRebound) {
+		this.oppOffRebound = oppOffRebound;
 	}
 
-	public double getOppDfdRebound() {
-		return oppDfdRebound;
+	public double getOppDefRebound() {
+		return oppDefRebound;
 	}
 
-	public void setOppDfdRebound(double oppDfdRebound) {
-		this.oppDfdRebound = oppDfdRebound;
+	public void setOppDefRebound(double oppDefRebound) {
+		this.oppDefRebound = oppDefRebound;
 	}
 
 	public double getOppTotRebound() {

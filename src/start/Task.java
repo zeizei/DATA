@@ -9,9 +9,15 @@ import html.PlayerMapHtml;
 import html.SeasonHtml;
 import html.SeasonMapHtml;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import beans.GamePlayer;
 import beans.GameTeam;
@@ -29,12 +35,12 @@ public class Task {
 		String before = "http://www.basketball-reference.com/leagues/NBA_";
 		String urlString = null;
 		String after = "_games.html";
-		for (int m = 2015; m >= 1950; m--) {
+		for (int m = 2015; m >= 2015; m--) {
 			urlString = before + String.valueOf(m) + after;
 			GameMapHtml schedule = new GameMapHtml(urlString);
 			ArrayList<GeneralGame> generalGameList = schedule.getGeneralGameList();
 			ArrayList<String> detailGameUrlList = schedule.getDetailGameUrlList();
-			for (int i = 0; i < detailGameUrlList.size(); i++) {
+			for (int i = detailGameUrlList.size() - 1; i < detailGameUrlList.size(); i++) {
 				db.update(generalGameList.get(i).getInsertTableStr());
 				System.out.println("-------------------------" + detailGameUrlList.get(i) + "-------------------------------------------");
 				System.out.println("------" + generalGameList.get(i) + "-----------------------------------------------");
@@ -101,16 +107,80 @@ public class Task {
 		String UrlString = "http://www.basketball-reference.com/players/a";
 		for (int k = 0; k < 26; k++) {
 			PlayerMapHtml playerMap = new PlayerMapHtml(UrlString);
-			ArrayList<GeneralPlayer> generalPlayerList = playerMap.getGeneralPlayerList();
 			ArrayList<String> detailPlayerUrlList = playerMap.getDetailPlayerUrlList();
 			for (int i = 0; i < detailPlayerUrlList.size(); i++) {
 				String htmlUrl = detailPlayerUrlList.get(i);
-				String playerName = generalPlayerList.get(i).getPlayerName();
-				PlayerImageHtml playerImage = new PlayerImageHtml(htmlUrl, playerName);
-				playerImage.getImagePNG();
+				PlayerImageHtml playerImage = new PlayerImageHtml(htmlUrl);
+				if (!playerImage.getImageJPG()) {
+					playerImage.getImagePNG();
+				}
 			}
 			String before = UrlString;
 			UrlString = before.substring(0, UrlString.length() - 1) + String.valueOf(((char) (before.charAt(before.length() - 1) + 1)));
+		}
+	}
+
+	public void fixNumOfWinAndLose() {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect("http://www.basketball-reference.com/leagues").get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (doc != null) {
+			Elements table = doc.getElementsByTag("table");
+			Elements trs = table.get(0).getElementsByTag("tr");
+			for (int i = 0; i < trs.size(); i++) {
+				Elements tds = trs.get(i).getElementsByTag("td");
+				if (tds != null && tds.size() > 0) {
+					Elements a = tds.get(0).getElementsByTag("a");
+					String url = "http://www.basketball-reference.com" + a.get(0).attr("href");
+					String season = a.get(0).html();
+					System.out.println(url);
+					System.out.println(season);
+					this.fixOneSeason(url, season);
+				}
+			}
+		}
+	}
+
+	private void fixOneSeason(String url, String season) {
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (doc != null) {
+			Element west = doc.getElementById("W_standings");
+			Element east = doc.getElementById("E_standings");
+			Element _standings = doc.getElementById("_standings");
+			if (west != null && east != null) {
+				this.dwOneDivision(west, season);
+				this.dwOneDivision(east, season);
+			}
+			else {
+				this.dwOneDivision(_standings, season);
+			}
+
+		}
+	}
+
+	public void dwOneDivision(Element ele, String season) {
+		if (ele != null) {
+			Elements teams = ele.getElementsByClass("full_table");
+			for (int i = 0; i < teams.size(); i++) {
+				Elements tds = teams.get(i).getElementsByTag("td");
+				String teamName = tds.get(0).getElementsByTag("a").text();
+				try {
+					double numOfWin = Double.parseDouble(tds.get(1).text());
+					double numOfLose = Double.parseDouble(tds.get(2).text());
+					String sql = "update seasonteam set numOfWin = " + numOfWin + ",numOfLose = " + numOfLose + " where teamName = '" + teamName + "' and season = '" + season + "'";
+					DB.getInstance().update(sql);
+				} catch (NumberFormatException e) {
+					System.out.println(teamName + season);
+				}
+			}
 		}
 	}
 

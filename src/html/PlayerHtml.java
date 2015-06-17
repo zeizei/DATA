@@ -117,7 +117,7 @@ public class PlayerHtml extends HtmlReader {
 				Object[] contents = { playerId, season, teamName, playerName, position, isPlayOff, age };
 				boolean iGeneralSucceed = seasonPlayer.AutoEncapsulate(fields, contents);
 				String[] tableFields = { "numOfGame", "numOfStart", "minute", "totalHit", "totalShot", "shot", "threeHit", "threeShot", "three", "twoShot", "twoHit", "two", "shotEFF", "freeHit",
-						"freeShot", "free", "ofdRebound", "dfdRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
+						"freeShot", "free", "offRebound", "defRebound", "totRebound", "assist", "steal", "block", "fault", "foul", "point" };
 				boolean isTableSucceed = seasonPlayer.AutoEncapsulate(tableFields, cell);
 				String key = season + teamName + String.valueOf(isPlayOff);
 				if (iGeneralSucceed && isTableSucceed) {
